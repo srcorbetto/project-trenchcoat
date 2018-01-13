@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Favorite Movies</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Test</h1>
+
+    <!-- Rendered buttons will get dumped here  -->
+    <div id="buttons-view"></div>
+
+    <form id="movie-form">
+      <label for="movie-input">Test</label>
+      <input type="text" id="movie-input"><br>
+
+      <!-- Button triggers new movie to be added -->
+      <input id="add-movie" type="submit" value="Test">
+    </form>
+
+    <!-- Movies will get dumped Dere -->
+    <div id="response"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--     <script type="text/javascript" src="facepp-sdk.min.js"></script> -->
+    <script type="text/javascript">
+      // Initial array of movies
+      var movies = ["x"];
+
+
+        //var movie = $(this).attr("data-name");
+        var queryURL = "https://api-us.faceplusplus.com/facepp/v3/detect";
+
+        // Creates AJAX call for the specific movie button being clicked
+        $.ajax({
+          url: queryURL,
+          method: "POST",
+          data : JSON.stringify({
+            api_key : 'bQE6WdsIjOYhlvLF4CCmDDpfEeIxiHAT',
+            api_secret : '5amRW0IV4Ddd24g7JCU3QB3Dtcumg8x3',
+            image_url : 'download.jpg',
+            return_attributes: "gender"
+          }),
+          dataType: 'json'
+        }),(function(response) {
+
+          console.log(response);
+          console.log('Hi');
+        });
+  
+
+
+    </script>
+  </div>
+</body>
+
+</html>
