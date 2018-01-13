@@ -1,2 +1,1 @@
-# project-trenchcoat
-Group Project
+# Project Trenchcoat
