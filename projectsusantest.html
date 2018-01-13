@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Susan Test</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>API and Graph Test</h1>
+
+    <!-- We'll be dumping our JSON contents in here -->
+    <p>API Test Stuff</p>
+    <div id="apistuff"></div>
+
+    <br>
+    <br>
+
+    <!-- This form will be where users input data about the movies -->
+    <p>Test Graph</p>
+    <div class="ct-chart ct-perfect-fourth"></div>
+
+    <br>
+    <br>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+    new Chartist.Pie('.ct-chart', {
+     series: [20, 10, 30, 40]
+      }, {
+        donut: true,
+        donutWidth: 60,
+        startAngle: 270,
+        total: 200,
+        showLabel: false
+      });
+    
+
+
+
+
+      // This .on("click") function will trigger the AJAX Call
+      $("#find-movie").on("click", function(event) {
+
+        // Preventing the submit button from trying to submit the form
+        // We're optionally using a form so the user may hit Enter to search instead of clicking the button
+        event.preventDefault();
+
+        // Here we grab the text from the input box
+        var movie = $("#movie-input").val();
+
+        // Here we construct our URL
+        var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+
+        // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
+        // and display it in the div with an id of movie-view
+
+        // YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE
+
+        // =================================================================
+    
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+        }).done(function(response) {
+
+          // Create CODE HERE to Log the queryURL
+          console.log(queryURL);
+          // Create CODE HERE to log the resulting object
+          console.log(response);
+          // Create CODE HERE to transfer content to HTML
+          $("#movie-view").text(JSON.stringify(response));
+
+        });
+        
+
+        // =================================================================
+      });
+    </script>
+  </div>
+</body>
+
+</html>
