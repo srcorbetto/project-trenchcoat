@@ -13,6 +13,16 @@ $(document).ready(function(){
 
   var database = firebase.database();
 
-  
+  $("#form-submit").click(function(e){
+
+    e.preventDefault();
+
+    var fileUpload = $("#input-image").val();
+
+    console.log(fileUpload);
+
+    database.ref().push(fileUpload);
+
+  });
 
 });
