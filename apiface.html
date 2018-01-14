@@ -19,7 +19,8 @@
 	</div>
 
 	<div class = 'row' id=response></div>
-</div>
+	<div class = 'row' id='image' style='margin-top: 30px'>Image Submitted: </div>
+ </div>
 
 
 
@@ -31,28 +32,33 @@ var cors_api_host = 'cors-anywhere.herokuapp.com';
 $('#Submit').on('click', function(event) {
 
 	event.preventDefault(); 
+	
 
 
 	var source = $('#link').val();
 	console.log(source);
 
-	// put your keys in the header
+	var newImage = $('<img>');
+	newImage.attr('src', source);
+	$('#image').append(newImage);
+
+	//header keys
 	var headers = {
 		"app_id"          : "59fe3f8b",
 		"app_key"         : "472b1119c610482500bfb00b6e897a1c"
 	};
-	//var payload  = { "image" : "http://cdn.facesofopensource.com/wp-content/uploads/2016/04/23072022/faces.BrianKernighan19449.web_.jpg" };
+	
+	//api call
 	var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
 	$.ajax(url, {
 		headers  : headers,
 	    type: "POST",
-	    //source: JSON.stringify(payload),
 	    dataType: "JSON"
 	}).done(function(response){
-		//console.log(response.frames[0].people[0].appearance);
+		
 		console.log(response);
 		$('#response').text(JSON.stringify(response));
-
+		
 	});
 
 
