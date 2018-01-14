@@ -37,16 +37,18 @@ $('#Submit').on('click', function(event) {
 
 	var source = $('#link').val();
 	console.log(source);
+
 	var newImage = $('<img>');
 	newImage.attr('src', source);
 	$('#image').append(newImage);
 
-	// put your keys in the header
+	//header keys
 	var headers = {
 		"app_id"          : "59fe3f8b",
 		"app_key"         : "472b1119c610482500bfb00b6e897a1c"
 	};
 	
+	//api call
 	var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
 	$.ajax(url, {
 		headers  : headers,
