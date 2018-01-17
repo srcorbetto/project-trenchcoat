@@ -2,6 +2,32 @@
 	vertical-align: middle;
 }
 
+.header {
+	width: 100%;
+	background: #f9461c;
+	position: fixed;
+	padding: 15px;
+	top: 0;
+	z-index: 200;
+}
+
+.bg {
+	margin-top: 110px;
+}
+
+.section {
+	background: #f6f6f6;
+	padding: 15px;
+}
+
 .name {
 	display: inline-block;
+}
+
+input[type='file'] {
+  color: transparent;
+}
+
+.chart-placeholder {
+	width: 100%;
 }
