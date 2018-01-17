@@ -17,10 +17,11 @@ $(document).ready(function(){
   var imageInput = document.getElementById("input-image");
 
   // Process of uploading the image
-  imageInput.addEventListener("change", function(e){
+  $("#form-submit").on("click", function(e){
+    e.preventDefault();
 
     // Get file
-    var file = e.target.files[0];
+    var file = imageInput.files[0];
 
     // Create a storage reference
     var storageRef = firebase.storage().ref("user_images/" + file.name);
