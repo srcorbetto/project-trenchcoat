@@ -1,3 +1,7 @@
-/*tr:hover {
-	color: pink;
-}*/
+.table td {
+	vertical-align: middle;
+}
+
+.name {
+	display: inline-block;
+}
