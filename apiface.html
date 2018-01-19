@@ -5,6 +5,30 @@
   <meta charset="utf-8">
   <title>Test</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <style>
+  	#modal {
+  		background-color: red;
+  		border-width: 2px;
+  		border-style: solid;
+  		border-color: black;
+  		position: relative;
+  		display: none;
+  		z-index: 1;
+  		padding: 30px;
+  		left: 50%;
+  		top: 50%;
+  		float: left;
+  		transform: translate(-50%, -50%);
+
+
+  	}
+  	#modalHeader {
+  		margin-bottom: 25px;
+  	}
+  	#Proceed {
+  		margin-right: 20px;
+  	}
+</style>
 </head>
 
 <body>
@@ -20,6 +44,13 @@
 
 	<div class = 'row' id=response></div>
 	<div class = 'row' id='image' style='margin-top: 30px'>Image Submitted: </div>
+	<div class = 'row' id='modal'>
+		<div class = 'col-md-12' id= 'modalContent'>
+			<h1 id='modalHeader'>Are You Sure You Want To Creep?</h1>
+			<button id='Proceed'>Confirm Creep</button>
+			<button id='goBack'>NO, Go Back</button>
+		</div>
+	</div>
  </div>
 
 
@@ -31,7 +62,22 @@
 
 $('#Submit').on('click', function(event) {
 
-	event.preventDefault(); 
+	$('#modal').css('display', 'block');
+	$('body').css('background-color', 'grey');
+
+	$('#goBack').on('click', function(event){
+		event.preventDefault(); 
+		$('#modal').css('display', 'none');
+		$('body').css('background-color', 'white');
+
+	});
+
+	$('#Proceed').on('click', function(event) {
+
+		event.preventDefault(); 
+		$('#modal').css('display', 'none');
+		$('body').css('background-color', 'white');
+
 	var cors_api_host = 'cors-anywhere.herokuapp.com';
 	
 
@@ -75,7 +121,13 @@ $('#Submit').on('click', function(event) {
 		
 		console.log(response);
 		//$('#response').text(JSON.stringify(response));
-	});
+	}); 
+
+});
+
+
+
+	
 
 
 });
