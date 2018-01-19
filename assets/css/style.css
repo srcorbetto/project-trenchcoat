@@ -39,12 +39,56 @@
 	display: inline-block;
 }
 
-.name {
-	/*display: inline-block;*/
+.face-holder {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	transition: .5s;
 }
 
-.impression {
-	/*display: inline-block;*/
+.face-holder:hover {
+	cursor: pointer;
+	transform: scale(1.05);
+}
+
+#face1 {
+	background: url(../img/svg/1-inactive.svg) center center no-repeat;
+	background-size: cover;
+}
+.face1-active {
+	background: url(../img/svg/1-active.svg) center center no-repeat !important;
+}
+
+#face2 {
+	background: url(../img/svg/2-inactive.svg) center center no-repeat;
+	background-size: cover;
+}
+.face2-active {
+	background: url(../img/svg/2-active.svg) center center no-repeat !important;
+}
+
+#face3 {
+	background: url(../img/svg/3-inactive.svg) center center no-repeat;
+	background-size: cover;
+}
+.face3-active {
+	background: url(../img/svg/3-active.svg) center center no-repeat !important;
+}
+
+#face4 {
+	background: url(../img/svg/4-inactive.svg) center center no-repeat;
+	background-size: cover;
+}
+.face4-active {
+	background: url(../img/svg/4-active.svg) center center no-repeat !important;
+}
+
+#face5 {
+	background: url(../img/svg/5-inactive.svg) center center no-repeat;
+	background-size: cover;
+}
+.face5-active {
+	background: url(../img/svg/5-active.svg) center center no-repeat !important;
 }
 
 input[type='file'] {
