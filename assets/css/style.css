@@ -2,6 +2,55 @@
 	vertical-align: middle;
 }
 
-.name {
+.header {
+	width: 100%;
+	background: #f9461c;
+	position: fixed;
+	padding: 10px 20px;
+	top: 0;
+	z-index: 200;
+	color: #fff;
+	text-align: center;
+}
+
+.header h3 {
+	/*display: inline-block;*/
+}
+
+.header p {
 	display: inline-block;
+	text-align: right;
+	float: right;
+	vertical-align: middle;
+	position: relative;
+	top: 6px;
+}
+
+.bg {
+	margin-top: 80px;
+}
+
+.section {
+	background: #f6f6f6;
+	padding: 20px;
+}
+
+.name-holder {
+	display: inline-block;
+}
+
+.name {
+	/*display: inline-block;*/
+}
+
+.impression {
+	/*display: inline-block;*/
+}
+
+input[type='file'] {
+  color: transparent;
+}
+
+.chart-placeholder {
+	width: 100%;
 }
