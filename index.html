@@ -11,6 +11,10 @@
 	<!-- Font Awesome -->
 	<script src="https://use.fontawesome.com/51fe8593c0.js"></script>
 
+
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+	  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
 	<!-- Additional Styles -->
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -126,9 +130,17 @@
 							</div>
 							<hr>
 							<h3 class="name">Text Analysis</h3>
-						  	<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+						  	<div id="textInfo"></div>
 						  	<hr>
-						  	<img class="chart-placeholder" src="http://via.placeholder.com/1000x250" alt="">
+						  	<!-- <img class="chart-placeholder" src="http://via.placeholder.com/1000x250" alt=""> -->
+						  	<h3>Creep Meter</h3>
+						  	<div class="container">
+		                        <div>
+		                            <p class ="score"></p>
+		                        </div>
+		                        <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+		                        <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
+                    		</div>
 						</div>
 					</div>
 				</div>

@@ -6,87 +6,268 @@
   <title>Susan Test</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesusan.css">
 
 </head>
 
 <body>
-  <div class="container">
-    <h1>API and Graph Test</h1>
 
-    <!-- We'll be dumping our JSON contents in here -->
-    <p>API Test Stuff</p>
-    <div id="apistuff"></div>
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-md-10 p2">
+                <h1>Input Text Samples for Evaluation</h1>
 
-    <br>
-    <br>
+                <form role="form ">
+                    <div class="form-group">
+                        <label for="text1">Text Sample 1:</label>
+                        <textarea class="form-control" id="text1" rows="5"></textarea>
+                    </div>
+           
+                    <button class="btn btn-default" id="submit" type="submit">Submit</button>
+                </form>
+                <br>
+                <p>Combined Text Here:</p>
+                <div id="textAll"></div>
 
-    <!-- This form will be where users input data about the movies -->
-    <p>Test Graph</p>
-    <div class="ct-chart ct-perfect-fourth"></div>
+                <br>
+                <br>
 
-    <br>
-    <br>
-
+                <!-- This form will be where users input data about the movies -->
+                <h2>Test Graph</h2><br><br>
+                <!-- <div> -->
+                    <div class="container">
+                        <div>
+                            <p class ="score"></p>
+                        </div>
+                        <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+                        <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 
 
-    new Chartist.Pie('.ct-chart', {
-     series: [20, 10, 30, 40]
-      }, {
-        donut: true,
-        donutWidth: 60,
-        startAngle: 270,
-        total: 200,
-        showLabel: false
-      });
-    
+
+
+//     var data = {
+//   // A labels array that can contain any sort of values
+//   labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+//   // Our series array that contains series objects or in this case series data arrays
+//   series: [
+//     [5, 2, 4, 2, 0]
+//   ]
+// };
+
+// // Create a new line chart object where as first parameter we pass in a selector
+// // that is resolving to our chart container element. The Second parameter
+// // is the actual data object.
+// new Chartist.Line('.ct-chart', data);
+
+
+    // new Chartist.Pie('.ct-chart', {
+    //  series: [20, 10, 30, 40]
+    //   }, {
+    //     donut: true,
+    //     donutWidth: 170,
+    //     startAngle: 270,
+    //     total: 200,
+    //     showLabel: true
+    //   });
+
+    var wordLengthAverage = 0;
+    var totalLetters = 0;
+
+    function displayTime(){
+        $(".score").text("CreeP Index: 87");
+    };
+
+    function displayIndextimeout(){
+    // $(".score").text("Creep Index: 87"); 
+    setTimeout(displayTime(), 20000);
+    };
+
+    // Capture Button Click
+    $("#submit").on("click", function(event) {
+      event.preventDefault();
+
+    function displayTime() {
+        $(".score").text("Creep Index: " + creepIndex);
+    };
+
+    function displayIndextimeout() {
+    // $(".score").text("Creep Index: 87"); 
+        setTimeout(displayTime, 4000);
+    };
+
+
+      var str1 = $("#text1").val().trim();
+      var str2 = $("#text2").val().trim();
+      var str3 = $("#text3").val().trim();
+    // this removes a line break or cr in the sample text.
+    str1 = str1.replace(/[\r\n]+/g," ");
+    str2 = str2.replace(/[\r\n]+/g," ");
+    str3 = str3.replace(/[\r\n]+/g," ");
+
+    var textCombined = str1.concat(" ",str2, " ",str3);
+    var longestWord = "";
+
+    $("#textAll").append(textCombined + "<br><br>");
+
+    var textArray = textCombined.split(" ");
+    console.log("This is the text array: " + textArray);
+
+    // Eliminate nonletter characters from each array element, calculate ave word length, fing longest word
+    for (var i=0; i<textArray.length;i++){
+        textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g,"");
+        $("#textAll").append(textArray[i] + " / "); 
+        // Average word length calculation
+        totalLetters = totalLetters + textArray[i].length;
+        wordLengthAverage = totalLetters/(i+1);
+        // Find the longest word and save it and display it
+        if (textArray[i].length > longestWord.length){
+            longestWord = textArray[i];
+            console.log("Longest word: " + longestWord);
+        };
+    };
+
+    console.log("This is the text array cleaned up: " + textArray);
+    console.log("Total Letters: " + totalLetters);
+    console.log("Average word Length: " + wordLengthAverage);
+
+    $("#textAll").append("<br><br>" + "Average Word Length: " + wordLengthAverage.toFixed(3)); 
+    $("#textAll").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters"); 
+    // Calculate the creep index
+    var textScore = 33 - ((2*wordLengthAverage) + longestWord.length);
+
+     if (textScore<0) {
+        textScore=0;
+     };
+
+    var impressionScore = 20;
+    var faceScore = 17;
+
+    var creepIndex = textScore + impressionScore + faceScore;
+    creepIndex = creepIndex.toFixed(1);
+    console.log("Creep Index:  " + creepIndex);
 
 
 
+// This chart displays our calculated index
+    var chart = new Chartist.Pie('#chart2', {
+  series: [creepIndex,0,0],
+  labels: [""]
+}, {
+    donut: true,
+    donutWidth: 170,
+    startAngle: 270,
+    total: 200,
+    showLabel: false
+});
 
-      // This .on("click") function will trigger the AJAX Call
-      $("#find-movie").on("click", function(event) {
+chart.on('draw', function(data) {
+  if(data.type === 'slice') {
+    // Get the total path length in order to use for dash array animation
+    var pathLength = data.element._node.getTotalLength();
 
-        // Preventing the submit button from trying to submit the form
-        // We're optionally using a form so the user may hit Enter to search instead of clicking the button
-        event.preventDefault();
+    // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+    data.element.attr({
+      'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+    });
 
-        // Here we grab the text from the input box
-        var movie = $("#movie-input").val();
+    // Create animation definition while also assigning an ID to the animation for later sync usage
+    var animationDefinition = {
+      'stroke-dashoffset': {
+        id: 'anim' + data.index,
+        dur: 6000,
+        from: -pathLength + 'px',
+        to:  '0px',
+        easing: Chartist.Svg.Easing.easeOutQuint,
+        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+        fill: 'freeze'
+      }
+    };
 
-        // Here we construct our URL
-        var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+    // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+    if(data.index !== 0) {
+      animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+    }
 
-        // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
-        // and display it in the div with an id of movie-view
+    // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+    data.element.attr({
+      'stroke-dashoffset': -pathLength + 'px'
+    });
 
-        // YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE
+    // We can't use guided mode as the animations need to rely on setting begin manually
+    // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+    data.element.animate(animationDefinition, false);
+  }
+});
 
-        // =================================================================
-    
+displayIndextimeout();
 
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-        }).done(function(response) {
 
-          // Create CODE HERE to Log the queryURL
-          console.log(queryURL);
-          // Create CODE HERE to log the resulting object
-          console.log(response);
-          // Create CODE HERE to transfer content to HTML
-          $("#movie-view").text(JSON.stringify(response));
+});  //end of click event
 
-        });
-        
+//-------------------------------------------------------------------------------
 
-        // =================================================================
-      });
+// This chart draws the background arc upon page refresh or reset button
+    var chart = new Chartist.Pie('#chart1', {
+  series: [0,0,100],
+  labels: [""]
+}, {
+    donut: true,
+    donutWidth: 170,
+    startAngle: 270,
+    total: 200,
+    showLabel: false
+});
+
+chart.on('draw', function(data) {
+  if(data.type === 'slice') {
+    // Get the total path length in order to use for dash array animation
+    var pathLength = data.element._node.getTotalLength();
+
+    // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+    data.element.attr({
+      'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+    });
+
+    // Create animation definition while also assigning an ID to the animation for later sync usage
+    var animationDefinition = {
+      'stroke-dashoffset': {
+        id: 'anim' + data.index,
+        dur: 10,
+        from: -pathLength + 'px',
+        to:  '0px',
+        easing: Chartist.Svg.Easing.easeOutQuint,
+        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+        fill: 'freeze'
+      }
+    };
+
+    // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+    if(data.index !== 0) {
+      animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+    }
+
+    // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+    data.element.attr({
+      'stroke-dashoffset': -pathLength + 'px'
+    });
+
+    // We can't use guided mode as the animations need to rely on setting begin manually
+    // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+    data.element.animate(animationDefinition, false);
+  }
+});
+
+
     </script>
-  </div>
+  
 </body>
 
 </html>

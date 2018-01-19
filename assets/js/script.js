@@ -20,6 +20,34 @@ $(document).ready(function(){
   $("#form-submit").on("click", function(e){
     e.preventDefault();
 
+
+    var str1 = $("#input-text").val().trim();
+    console.log(str1);
+    var longestWord = "";
+    var totalLetters = 0;
+    var wordLengthAverage = 0;
+    str1 = str1.replace(/[\r\n]+/g," ");
+    var textArray = str1.split(" ");
+
+    for (var i=0; i<textArray.length;i++){
+        textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g,""); 
+        // Average word length calculation
+        totalLetters = totalLetters + textArray[i].length;
+        wordLengthAverage = totalLetters/(i+1);
+        // Find the longest word and save it and display it
+        if (textArray[i].length > longestWord.length){
+            longestWord = textArray[i];
+            console.log("Longest word: " + longestWord);
+        };
+    };
+
+    $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3)); 
+    $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+
+
+
+
+
     // Get file
     var file = imageInput.files[0];
 
@@ -112,4 +140,134 @@ $(document).ready(function(){
 
       });
 
-  });
+  });  
+
+
+
+
+// This chart draws the background arc upon page refresh or reset button
+    var chart = new Chartist.Pie('#chart1', {
+  series: [0,0,100],
+  labels: [""]
+}, {
+    donut: true,
+    donutWidth: 170,
+    startAngle: 270,
+    total: 200,
+    showLabel: false
+});
+
+chart.on('draw', function(data) {
+  if(data.type === 'slice') {
+    // Get the total path length in order to use for dash array animation
+    var pathLength = data.element._node.getTotalLength();
+
+    // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+    data.element.attr({
+      'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+    });
+
+    // Create animation definition while also assigning an ID to the animation for later sync usage
+    var animationDefinition = {
+      'stroke-dashoffset': {
+        id: 'anim' + data.index,
+        dur: 10,
+        from: -pathLength + 'px',
+        to:  '0px',
+        easing: Chartist.Svg.Easing.easeOutQuint,
+        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+        fill: 'freeze'
+      }
+    };
+
+    // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+    if(data.index !== 0) {
+      animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+    }
+
+    // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+    data.element.attr({
+      'stroke-dashoffset': -pathLength + 'px'
+    });
+
+    // We can't use guided mode as the animations need to rely on setting begin manually
+    // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+    data.element.animate(animationDefinition, false);
+  }
+});
+
+
+
+
+
+
+
+    var textScore = 15;
+    var impressionScore = 20;
+    var faceScore = 17;
+
+    var creepIndex = textScore + impressionScore + faceScore;
+    creepIndex = creepIndex.toFixed(1);
+
+      function displayIndextimeout() { 
+      setTimeout(displayTime, 4000);
+      };
+
+      function displayTime() {
+        $(".score").text("Creep Index: " + creepIndex);
+      };
+
+
+
+// This chart displays our calculated index
+    var chart = new Chartist.Pie('#chart2', {
+  series: [creepIndex,0,0],
+  labels: [""]
+}, {
+    donut: true,
+    donutWidth: 170,
+    startAngle: 270,
+    total: 200,
+    showLabel: false
+});
+
+chart.on('draw', function(data) {
+  if(data.type === 'slice') {
+    // Get the total path length in order to use for dash array animation
+    var pathLength = data.element._node.getTotalLength();
+
+    // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+    data.element.attr({
+      'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+    });
+
+    // Create animation definition while also assigning an ID to the animation for later sync usage
+    var animationDefinition = {
+      'stroke-dashoffset': {
+        id: 'anim' + data.index,
+        dur: 6000,
+        from: -pathLength + 'px',
+        to:  '0px',
+        easing: Chartist.Svg.Easing.easeOutQuint,
+        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+        fill: 'freeze'
+      }
+    };
+
+    // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+    if(data.index !== 0) {
+      animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+    }
+
+    // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+    data.element.attr({
+      'stroke-dashoffset': -pathLength + 'px'
+    });
+
+    // We can't use guided mode as the animations need to rely on setting begin manually
+    // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+    data.element.animate(animationDefinition, false);
+  }
+});
+
+displayIndextimeout();
