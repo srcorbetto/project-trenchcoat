@@ -98,3 +98,34 @@ input[type='file'] {
 .chart-placeholder {
 	width: 100%;
 }
+
+
+.score {font-size: 32px;
+	z-index: 1000;
+	padding-left: 130px;
+	padding-top: 30px;
+	position: absolute;
+}
+
+
+
+#chart1 {z-index: 0;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+
+#chart2 {z-index: 50;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.container {
+	position:relative;
+}
+
+/*.meterbox {background-color: #f6f6f6;
+	background-color: salmon;
+}*/
