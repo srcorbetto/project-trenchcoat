@@ -8,27 +8,22 @@
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
+	<!-- Font Awesome -->
+	<script src="https://use.fontawesome.com/51fe8593c0.js"></script>
+
 	<!-- Additional Styles -->
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
+	<!-- Header -->
+	<div class="header">
+		<h3><i class="fa fa-search" aria-hidden="true"></i> Creeper Index</h3>
+		<!-- <p>Get Started | History</p> -->
+	</div>
+
 	<!-- Container -->
 	<div class="container-fluid bg">
-		
-		<!-- Header -->
-		<div class="row mt-4">
-			
-			<div class="col">
-				<div class="jumbotron jumbotron-fluid">
-				  <div class="container">
-				    <h1 class="display-4">Fluid jumbotron</h1>
-				    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-				  </div>
-				</div>
-			</div>
-
-		</div>
 
 		<!-- Main Content Area -->
 		<div class="row">
@@ -38,32 +33,65 @@
 				
 				<!-- Top Content User Profile -->
 				<div class="row">
+					<!-- Profile Section -->
+					<!-- <div class="col">
+						<div class="profile-section section">
+						  <img class="profile" src="http://via.placeholder.com/100x100" alt="Card image cap">
+						  <h3 class="name">Name</h3>
+						</div>
+					</div> -->
 					<div class="col">
-						<div class="card">
-						  <img class="card-img-top" src="http://via.placeholder.com/450x450" alt="Card image cap">
-						  <div class="card-body">
-						    <h5 class="card-title">Card title</h5>
-						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						  </div>
+						<div class="profile-section section">
+						  <h3 class="">Welcome to the Creeper Index</h3>
+						  <p>The Crepper Index is a platform that allows users to conduct background checks.</p>
+						  <hr>
+						  <ul>
+						  	<li>List Item</li>
+						  	<li>List Item</li>
+						  	<li>List Item</li>
+						  </ul>
 						</div>
 					</div>
 				</div>
 
 				<!-- Bottom Content Input Area -->
-				<div class="row">
+				<div class="row mt-4 mb-4">
 					<div class="col">
-						<form>
-						  <div class="form-group">
-						    <label for="searchName">Name</label>
-						    <input type="text" class="form-control" id="searchName" aria-describedby="emailHelp" placeholder="Enter person's name">
-						  </div>
-						  <div class="form-group">
-						    <label for="exampleFormControlFile1">Example file input</label>
-						    <input type="file" class="form-control-file" id="exampleFormControlFile1">
-						  </div>
-						  </div>
-						  <button type="submit" class="btn btn-primary">Submit</button>
-						</form>
+						<div class="form-section section">
+							<form>
+							<!-- Name Input -->
+							  <div class="form-group">
+							    <label for="input-name">Name</label>
+							    <input type="text" class="form-control" id="input-name" placeholder="Enter person's name">
+							  </div>
+							  <!-- Text Area Input -->
+							  <div class="form-group">
+							    <label for="exampleFormControlTextarea1">Text Analysis</label>
+							    <textarea class="form-control" id="input-text" rows="3"></textarea>
+							  </div>
+							  <!-- File Upload Section -->
+							  <div class="row">
+							  	<!-- <div class="col-xs-12">
+							  		<h5>Upload an image from your device or URL</h5>
+							  	</div> -->
+							  	<!-- URL Input -->
+							  	<div class="col-md-6">
+							  		<div class="form-group">
+									    <label for="input-url">Photo from URL</label>
+									    <input type="text" class="form-control" id="input-url" placeholder="Add URL">
+								    </div>
+							  	</div>
+							  	<!-- File Input -->
+							  	<div class="col-md-6">
+							  		<div class="form-group">
+									    <label for="input-image">Upload an Image</label>
+									    <input value="upload" type="file" class="form-control-file" id="input-image">
+								  </div>
+							  	</div>
+							  </div>
+							  <button type="submit" class="btn btn-primary form" id="form-submit">Submit</button>
+							</form>	
+						</div>
 					</div>
 				</div>
 
@@ -72,23 +100,11 @@
 			<!-- Right -->
 			<div class="col-md-6">
 
-				<!-- Top Content -->
-				<div class="row">
+				<!-- TEST Top Content -->
+				<!-- <div class="row">
 					<div class="col">
 						<div class="card">
-						  <img class="card-img-top" src="http://via.placeholder.com/450x450" alt="Card image cap">
-						  <div class="card-body">
-						    <h5 class="card-title">Card title</h5>
-						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						  </div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Middle Content -->
-				<div class="row">
-					<div class="col">
-						<div class="card">
+						  <img class="card-img-top" src="http://via.placeholder.com/600x400" alt="Card image cap">
 						  <div class="card-body">
 						    <h5 class="card-title">Card title</h5>
 						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -96,29 +112,58 @@
 						  </div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
-				<!-- Bottom Content -->
-				<div class="row">
+				<!-- Top Content -->
+				<div class="row mb-4">
 					<div class="col">
-						<div class="card">
-						  <img class="card-img-top" src="http://via.placeholder.com/450x450" alt="Card image cap">
-						  <div class="card-body">
-						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						  </div>
+						<!-- Creep Profile -->
+						<div class="creep-photo-section section">
+							<img class="profile" src="http://via.placeholder.com/200x200" alt="Card image cap">
+							<div class="name-holder">
+								<h3 class="name">Name</h3>
+						  		<p class="impression">Impression goes here</p>
+							</div>
+							<hr>
+							<h3 class="name">Text Analysis</h3>
+						  	<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+						  	<hr>
+						  	<img class="chart-placeholder" src="http://via.placeholder.com/1000x250" alt="">
 						</div>
 					</div>
 				</div>
+
+				<!-- Middle Content -->
+				<!-- Creep text -->
+				<!-- <div class="row mt-4">
+					<div class="col">
+						<div class="creep-text-section section">
+						  <h3 class="name">Name</h3>
+						  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+						</div>
+					</div>
+				</div> -->
+
+				<!-- Bottom Content -->
+				<!-- Creep Chart -->
+				<!-- <div class="row mt-4">
+					<div class="col">
+						<div class="creep-text-section section">
+						  <img class="chart-placeholder" src="http://via.placeholder.com/1000x250" alt="">
+						</div>
+					</div>
+				</div> -->
 
 			</div>
 
 		</div>
 
 		<!-- History Section -->
-		<div class="row mt-4">
+		<div class="row">
 			
 			<!-- History Item -->
 			<div class="col">
+
 					<table class="table table-striped">
 					  <tbody>
 					    <tr>
@@ -145,7 +190,7 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 
 	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	
 	<!-- Additional Scripts -->
 	<script src="assets/js/script.js"></script>
