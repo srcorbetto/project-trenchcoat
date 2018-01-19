@@ -71,7 +71,7 @@ $(document).ready(function(){
           console.log(url);
           console.log(newURL);
 
-          //$(".card-img-top").attr("src", url);
+          $(".profile").attr("src", url);
           var cors_api_host = 'cors-anywhere.herokuapp.com';
 
 
