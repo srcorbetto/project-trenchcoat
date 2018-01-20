@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 600;
 }
 
-p, label, li, td {
+p, label, li, td, div {
 	color: #7d7d7d;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 400;
@@ -177,18 +177,25 @@ p, label, li, td {
 /*Summary Styles*/
 /*===========================================================*/
 .profile {
-
+	max-height: 200px;
 }
 
 .name-holder {
 
 }
 
-
+/*History Profile*/
+/*===========================================================*/
+.history-profile {
+	  object-fit: cover;
+	  width:60px;
+	  height:60px;
+	  border-radius: 50%;
+}
 
 .score {
 	font-size: 32px;
-	z-index: 1000;
+	z-index: 100;
 	padding-left: 130px;
 	padding-top: 30px;
 	position: absolute;
@@ -230,3 +237,29 @@ p, label, li, td {
 		padding-top: 10px
 	}
 }
+
+/*Modal Image*/
+#modal {
+	background-color: red;
+	border-width: 2px;
+	border-style: solid;
+	border-color: black;
+	position: absolute;
+	display: none;
+	z-index: 2000;
+	padding: 30px;
+	left: 50%;
+	top: 50%;
+	float: left;
+	transform: translate(-50%, -50%);
+
+
+}
+
+#modalHeader {
+	margin-bottom: 25px;
+}
+
+#Proceed {
+  	margin-right: 20px;
+ }
