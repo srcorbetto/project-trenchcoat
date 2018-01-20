@@ -144,6 +144,8 @@ $(document).ready(function() {
 
     });
 
+    //Submit Modal
+    // ==================================================
     $("#Proceed").on("click", function(e) {
         e.preventDefault();
 
@@ -169,6 +171,8 @@ $(document).ready(function() {
                 };
             };
 
+      var globalImageURL = '';
+
 
             var faceScore = 0;
             var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
@@ -187,7 +191,10 @@ $(document).ready(function() {
             console.log("creepIndex: " + creepIndex);
 
             $(".personname").append(targetName);
-
+        
+      $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+      $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+      
             $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3));
             $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
@@ -372,7 +379,7 @@ $(document).ready(function() {
             labels: [""]
         }, {
             donut: true,
-            donutWidth: 170,
+            donutWidth: 30,
             startAngle: 270,
             total: 200,
             showLabel: false
@@ -438,13 +445,11 @@ $(document).ready(function() {
             labels: [""]
         }, {
             donut: true,
-            donutWidth: 170,
+            donutWidth: 30,
             startAngle: 270,
             total: 200,
             showLabel: false
         });
-
-
 
         chart.on('draw', function(data) {
             if (data.type === 'slice') {
