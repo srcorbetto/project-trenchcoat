@@ -21,6 +21,7 @@ $(document).ready(function(){
 
   //Face Impression value
   var impressionScore;
+  var impressionSummaryImage;
 
   // Face Click
   $("#face1").click(function() {
@@ -30,6 +31,8 @@ $(document).ready(function(){
     $("#face3").removeClass('face3-active');
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
+
+    impressionSummaryImage = "assets/img/svg/1-active.svg";
 
     impresssionScore = 33;
     console.log(impresssionScore);
@@ -43,6 +46,8 @@ $(document).ready(function(){
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
 
+    impressionSummaryImage = "assets/img/svg/2-active.svg";
+
     impresssionScore = 24.75;
     console.log(impresssionScore);
 
@@ -54,6 +59,8 @@ $(document).ready(function(){
     $("#face1").removeClass('face1-active');
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
+
+    impressionSummaryImage = "assets/img/svg/3-active.svg";
 
     impresssionScore = 16.5;
     console.log(impresssionScore);
@@ -67,6 +74,8 @@ $(document).ready(function(){
     $("#face1").removeClass('face1-active');
     $("#face5").removeClass('face5-active');
 
+    impressionSummaryImage = "assets/img/svg/4-active.svg";
+
     impresssionScore = 8.25;
     console.log(impresssionScore);
 
@@ -78,6 +87,8 @@ $(document).ready(function(){
     $("#face3").removeClass('face3-active');
     $("#face4").removeClass('face4-active');
     $("#face1").removeClass('face1-active');
+
+    impressionSummaryImage = "assets/img/svg/5-active.svg";
 
     impresssionScore = 0;
     console.log(impresssionScore);
@@ -134,141 +145,148 @@ $(document).ready(function(){
     console.log(imageURL);
 
 
-    // if (imageURL === "") {
+    if (imageURL === "") {
 
-    //   console.log('this is working');
+      console.log('this is working');
 
-    //       // Get file
-    //   var file = imageInput.files[0];
-    //   console.log(file);
+          // Get file
+      var file = imageInput.files[0];
+      console.log(file);
 
-    //   // Create a storage reference
-    //   var storageRef = firebase.storage().ref("user_images/" + file.name);
+      // Create a storage reference
+      var storageRef = firebase.storage().ref("user_images/" + file.name);
 
-    //   // Upload File
-    //   var task = storageRef.put(file);
+      // Upload File
+      var task = storageRef.put(file);
 
-    //   var newURL = '';
+      var newURL = '';
 
-    //   // Update progress
-    //   task.on("state_changed",
+      // Update progress
+      task.on("state_changed",
 
-    //     function progress(snapshot) {
+        function progress(snapshot) {
 
-    //       console.log(snapshot);
+          console.log(snapshot);
 
-    //     },
+        },
 
-    //     function error(err) {
+        function error(err) {
 
-    //       console.log(err);
+          console.log(err);
 
-    //     },
+        },
 
-    //     function complete() {
+        function complete() {
 
-    //       console.log("complete");
+          console.log("complete");
 
-    //       //Once complete - get the stored image URL
-    //       storageRef.getDownloadURL().then(function(url){
+          //Once complete - get the stored image URL
+          storageRef.getDownloadURL().then(function(url){
 
-    //       newURL = url; 
+          newURL = url; 
 
-    //       console.log(url);
-    //       console.log(newURL);
+          console.log(url);
+          console.log(newURL);
 
-    //       $(".profile").attr("src", url);
-    //       var cors_api_host = 'cors-anywhere.herokuapp.com';
-
-
-    //       // Gather link to image
-
-    //       var source = newURL;
-    //       console.log(source);
+          $(".profile").attr("src", url);
+          var cors_api_host = 'cors-anywhere.herokuapp.com';
 
 
-    //       //header keys
-    //       var headers = {
-    //         "app_id"          : "59fe3f8b",
-    //         "app_key"         : "472b1119c610482500bfb00b6e897a1c"
-    //       };
+          // Gather link to image
+
+          var source = newURL;
+          console.log(source);
+
+
+          //header keys
+          var headers = {
+            "app_id"          : "59fe3f8b",
+            "app_key"         : "472b1119c610482500bfb00b6e897a1c"
+          };
           
-    //       //face recognition api call
-    //       var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
-    //       var payload  = { "image" : source };
-    //       console.log(payload);
-    //       console.log(urlFace);
-    //       $.ajax(urlFace, {
-    //         headers  : headers,
-    //           type: "POST",
-    //           data: JSON.stringify(payload),
-    //           dataType: "JSON"
-    //       }).done(function(response){
+          //face recognition api call
+          var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
+          var payload  = { "image" : source };
+          console.log(payload);
+          console.log(urlFace);
+          $.ajax(urlFace, {
+            headers  : headers,
+              type: "POST",
+              data: JSON.stringify(payload),
+              dataType: "JSON"
+          }).done(function(response){
             
-    //         console.log(response);
-    //         //console.log(response.images[0].faces[0].height);
-    //       });
+            console.log(response);
+            //console.log(response.images[0].faces[0].height);
+          });
 
-    //       //emotion api call
-    //       var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
-    //       $.ajax(url, {
-    //         headers  : headers,
-    //           type: "POST",
-    //           dataType: "JSON"
-    //       }).done(function(response){
+          //emotion api call
+          var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
+          $.ajax(url, {
+            headers  : headers,
+              type: "POST",
+              dataType: "JSON"
+          }).done(function(response){
             
-    //         console.log(response);
+            console.log(response);
             
-    //       });
+          });
 
-    //       });
+          });
 
-    //     //end complete function  
-    //     });
-    // }
-    // else {
+        //end complete function  
+        });
+    }
+    else {
 
-    //   var cors_api_host = 'cors-anywhere.herokuapp.com';
-    //   var source = $("#input-url").val().trim();
+      var cors_api_host = 'cors-anywhere.herokuapp.com';
+      var source = $("#input-url").val().trim();
+
+      // Place img url into profile source
+      $(".profile").attr("src", source);
 
 
-    //       //header keys
-    //       var headers = {
-    //         "app_id"          : "59fe3f8b",
-    //         "app_key"         : "472b1119c610482500bfb00b6e897a1c"
-    //       };
+          //header keys
+          var headers = {
+            "app_id"          : "59fe3f8b",
+            "app_key"         : "472b1119c610482500bfb00b6e897a1c"
+          };
           
-    //       //face recognition api call
-    //       var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
-    //       var payload  = { "image" : source };
-    //       console.log(payload);
-    //       console.log(urlFace);
-    //       $.ajax(urlFace, {
-    //         headers  : headers,
-    //           type: "POST",
-    //           data: JSON.stringify(payload),
-    //           dataType: "JSON"
-    //       }).done(function(response){
+          //face recognition api call
+          var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
+          var payload  = { "image" : source };
+          console.log(payload);
+          console.log(urlFace);
+          $.ajax(urlFace, {
+            headers  : headers,
+              type: "POST",
+              data: JSON.stringify(payload),
+              dataType: "JSON"
+          }).done(function(response){
             
-    //         console.log(response);
-    //         //console.log(response.images[0].faces[0].height);
-    //       });
+            console.log(response);
+            //console.log(response.images[0].faces[0].height);
+          });
 
-    //       //emotion api call
-    //       var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
-    //       $.ajax(url, {
-    //         headers  : headers,
-    //           type: "POST",
-    //           dataType: "JSON"
-    //       }).done(function(response){
+          //emotion api call
+          var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
+          $.ajax(url, {
+            headers  : headers,
+              type: "POST",
+              dataType: "JSON"
+          }).done(function(response){
             
-    //         console.log(response);
+            console.log(response);
             
-    //       });
+          });
 
-    // }
+    }
 
+    // Build the table row and add info into into the different <td>'s
+    var creepInfoRow = $("<tr>");
+    creepInfoRow.html("<td>" +"<img class='history-profile' src='" + imageURL + "'>" );
 
+    $("tbody").append(creepInfoRow);
 
     indexChart();
 
