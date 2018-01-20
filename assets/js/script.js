@@ -21,6 +21,7 @@ $(document).ready(function(){
 
   //Face Impression value
   var impressionScore;
+  var creepIndex = 0;
 
   // Face Click
   $("#face1").click(function() {
@@ -31,8 +32,8 @@ $(document).ready(function(){
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
 
-    impresssionScore = 33;
-    console.log(impresssionScore);
+    impressionScore = 33;
+    console.log(impressionScore);
 
   });
   $("#face2").click(function() {
@@ -43,8 +44,8 @@ $(document).ready(function(){
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
 
-    impresssionScore = 24.75;
-    console.log(impresssionScore);
+    impressionScore = 24.75;
+    console.log(impressionScore);
 
   });
   $("#face3").click(function() {
@@ -55,8 +56,8 @@ $(document).ready(function(){
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
 
-    impresssionScore = 16.5;
-    console.log(impresssionScore);
+    impressionScore = 16.5;
+    console.log(impressionScore);
 
   });
   $("#face4").click(function() {
@@ -67,8 +68,8 @@ $(document).ready(function(){
     $("#face1").removeClass('face1-active');
     $("#face5").removeClass('face5-active');
 
-    impresssionScore = 8.25;
-    console.log(impresssionScore);
+    impressionScore = 8.25;
+    console.log(impressionScore);
 
   });
   $("#face5").click(function() {
@@ -79,8 +80,8 @@ $(document).ready(function(){
     $("#face4").removeClass('face4-active');
     $("#face1").removeClass('face1-active');
 
-    impresssionScore = 0;
-    console.log(impresssionScore);
+    impressionScore = 0;
+    console.log(impressionScore);
 
   });
 
@@ -120,6 +121,25 @@ $(document).ready(function(){
         };
     };
 
+
+    
+    var faceScore = 0;
+    var textScore = 33 - ((2*wordLengthAverage) + longestWord.length);
+
+     if (textScore<0) {
+        textScore=0;
+     };
+
+     console.log("textScore:" + textScore);
+
+
+    var targetName = $("#input-name").val().trim();
+
+    creepIndex = textScore + impressionScore + faceScore;
+    creepIndex = creepIndex.toFixed(1);
+    console.log("creepIndex: " + creepIndex);
+
+    $(".personname").append(targetName);
     $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3)); 
     $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
@@ -338,16 +358,7 @@ $(document).ready(function(){
   bgChart();
 
 
-
-    var textScore = 15;
-    var impressionScore = 20;
-    var faceScore = 17;
-
-    var creepIndex = textScore + impressionScore + faceScore;
-    creepIndex = creepIndex.toFixed(1);
-
-
-
+ // This function displays our calculated index chart
   var indexChart = function () {
         function displayIndextimeout() { 
         setTimeout(displayTime, 4000);
@@ -356,8 +367,6 @@ $(document).ready(function(){
         function displayTime() {
           $(".score").text("Creep Index: " + creepIndex);
         };
-
-  // This function displays our calculated index chart
 
     var chart = new Chartist.Pie('#chart2', {
       series: [creepIndex,0,0],
