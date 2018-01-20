@@ -239,6 +239,17 @@ p, label, li, td, div {
 }
 
 /*Modal Image*/
+#modalContent {
+	width: 100%;
+	background: rgba(30, 30, 30, 0.9);
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	z-index: 2000;
+	text-align: center;
+	display: none;
+}
+
 #modal {
 	background-color: red;
 	border-width: 2px;
@@ -256,8 +267,13 @@ p, label, li, td, div {
 
 }
 
+#modalContent p {
+	color: #fff;
+}
+
 #modalHeader {
-	margin-bottom: 25px;
+	margin-top: 30vh;
+	color: #fff;
 }
 
 #Proceed {
