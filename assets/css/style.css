@@ -188,7 +188,7 @@ p, label, li, td {
 
 .score {
 	font-size: 32px;
-	z-index: 1000;
+	z-index: 100;
 	padding-left: 130px;
 	padding-top: 30px;
 	position: absolute;
@@ -230,3 +230,29 @@ p, label, li, td {
 		padding-top: 10px
 	}
 }
+
+/*Modal Image*/
+#modal {
+	background-color: red;
+	border-width: 2px;
+	border-style: solid;
+	border-color: black;
+	position: absolute;
+	display: none;
+	z-index: 2000;
+	padding: 30px;
+	left: 50%;
+	top: 50%;
+	float: left;
+	transform: translate(-50%, -50%);
+
+
+}
+
+#modalHeader {
+	margin-bottom: 25px;
+}
+
+#Proceed {
+  	margin-right: 20px;
+ }
