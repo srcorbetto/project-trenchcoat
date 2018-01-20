@@ -185,7 +185,7 @@ $(document).ready(function(){
     console.log("creepIndex: " + creepIndex);
 
     $(".personname").append(targetName);
-      
+    $(".impression").append("<img src =" + impressionSummaryImage + ">");
     $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3)); 
     $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
@@ -366,11 +366,11 @@ $(document).ready(function(){
   // This function draws the background arc upon page refresh or reset button
   var bgChart = function () {
     var chart = new Chartist.Pie('#chart1', {
-      series: [0,0,100],
+      series: [0,0,0,0,100],
       labels: [""]
     }, {
       donut: true,
-      donutWidth: 170,
+      donutWidth: 30,
       startAngle: 270,
       total: 200,
       showLabel: false
@@ -432,11 +432,11 @@ $(document).ready(function(){
         };
 
     var chart = new Chartist.Pie('#chart2', {
-      series: [creepIndex,0,0],
+      series: [creepIndex],
       labels: [""]
     }, {
       donut: true,
-      donutWidth: 170,
+      donutWidth: 30,
       startAngle: 270,
       total: 200,
       showLabel: false
