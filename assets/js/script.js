@@ -128,6 +128,7 @@ $(document).ready(function(){
 
 
   // Process of uploading the image
+  // =========================================================
   $("#form-submit").on("click", function(e){
     e.preventDefault();
     $('#modal').css('display', 'block');
@@ -139,11 +140,17 @@ $(document).ready(function(){
       $('body').css('background-color', 'white');
 
     });
+  });
+
+    //Submit Modal
+    // ==================================================
     $('#Proceed').on('click', function(event) {
 
       event.preventDefault(); 
       $('#modal').css('display', 'none');
       $('body').css('background-color', 'white');
+
+      var globalImageURL = '';
 
 
 
@@ -168,32 +175,33 @@ $(document).ready(function(){
       };
 
     
-    var faceScore = 0;
-    var textScore = 33 - ((2*wordLengthAverage) + longestWord.length);
+      var faceScore = 0;
+      var textScore = 33 - ((2*wordLengthAverage) + longestWord.length);
 
-     if (textScore<0) {
-        textScore=0;
-     };
+       if (textScore<0) {
+          textScore=0;
+       };
 
-     console.log("textScore:" + textScore);
+       console.log("textScore:" + textScore);
 
 
-    var targetName = $("#input-name").val().trim();
+      var targetName = $("#input-name").val().trim();
 
-    creepIndex = textScore + impressionScore + faceScore;
-    creepIndex = creepIndex.toFixed(1);
-    console.log("creepIndex: " + creepIndex);
+      creepIndex = textScore + impressionScore + faceScore;
+      creepIndex = creepIndex.toFixed(1);
+      console.log("creepIndex: " + creepIndex);
 
-    $(".personname").append(targetName);
-      
-    $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3)); 
-    $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+      $(".personname").text(targetName);
+        
+      $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+      $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
       // Get file
       var file = imageInput.files[0];
 
       var imageURL = $("#input-url").val().trim();
       console.log(imageURL);
+
 
       if (imageURL === "") {
 
@@ -347,16 +355,16 @@ $(document).ready(function(){
       }
 
     // Build the table row and add info into into the different <td>'s
+
     var creepInfoRow = $("<tr>");
     creepInfoRow.html("<td>" +"<img class='history-profile' src='" + imageURL + "'>" );
-
     $("tbody").append(creepInfoRow);
 
     indexChart();
 
       // end on-click
       });
-      });
+
 
   // });  
 
@@ -370,7 +378,7 @@ $(document).ready(function(){
       labels: [""]
     }, {
       donut: true,
-      donutWidth: 170,
+      donutWidth: 30,
       startAngle: 270,
       total: 200,
       showLabel: false
@@ -436,7 +444,7 @@ $(document).ready(function(){
       labels: [""]
     }, {
       donut: true,
-      donutWidth: 170,
+      donutWidth: 30,
       startAngle: 270,
       total: 200,
       showLabel: false
