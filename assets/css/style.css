@@ -211,7 +211,7 @@ p, label, li, td {
 	left: 0px;
 }
 
-.chart-container {
+.container {
 	position:relative;
 	min-height: 250px;
 }
