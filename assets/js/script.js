@@ -134,206 +134,208 @@ $(document).ready(function(){
     console.log(imageURL);
 
 
-    if (imageURL === "") {
+    // if (imageURL === "") {
 
-      console.log('this is working');
+    //   console.log('this is working');
 
-          // Get file
-      var file = imageInput.files[0];
-      console.log(file);
+    //       // Get file
+    //   var file = imageInput.files[0];
+    //   console.log(file);
 
-      // Create a storage reference
-      var storageRef = firebase.storage().ref("user_images/" + file.name);
+    //   // Create a storage reference
+    //   var storageRef = firebase.storage().ref("user_images/" + file.name);
 
-      // Upload File
-      var task = storageRef.put(file);
+    //   // Upload File
+    //   var task = storageRef.put(file);
 
-      var newURL = '';
+    //   var newURL = '';
 
-      // Update progress
-      task.on("state_changed",
+    //   // Update progress
+    //   task.on("state_changed",
 
-        function progress(snapshot) {
+    //     function progress(snapshot) {
 
-          console.log(snapshot);
+    //       console.log(snapshot);
 
-        },
+    //     },
 
-        function error(err) {
+    //     function error(err) {
 
-          console.log(err);
+    //       console.log(err);
 
-        },
+    //     },
 
-        function complete() {
+    //     function complete() {
 
-          console.log("complete");
+    //       console.log("complete");
 
-          //Once complete - get the stored image URL
-          storageRef.getDownloadURL().then(function(url){
+    //       //Once complete - get the stored image URL
+    //       storageRef.getDownloadURL().then(function(url){
 
-          newURL = url; 
+    //       newURL = url; 
 
-          console.log(url);
-          console.log(newURL);
+    //       console.log(url);
+    //       console.log(newURL);
 
-          $(".profile").attr("src", url);
-          var cors_api_host = 'cors-anywhere.herokuapp.com';
-
-
-          // Gather link to image
-
-          var source = newURL;
-          console.log(source);
+    //       $(".profile").attr("src", url);
+    //       var cors_api_host = 'cors-anywhere.herokuapp.com';
 
 
-          //header keys
-          var headers = {
-            "app_id"          : "59fe3f8b",
-            "app_key"         : "472b1119c610482500bfb00b6e897a1c"
-          };
+    //       // Gather link to image
+
+    //       var source = newURL;
+    //       console.log(source);
+
+
+    //       //header keys
+    //       var headers = {
+    //         "app_id"          : "59fe3f8b",
+    //         "app_key"         : "472b1119c610482500bfb00b6e897a1c"
+    //       };
           
-          //face recognition api call
-          var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
-          var payload  = { "image" : source };
-          console.log(payload);
-          console.log(urlFace);
-          $.ajax(urlFace, {
-            headers  : headers,
-              type: "POST",
-              data: JSON.stringify(payload),
-              dataType: "JSON"
-          }).done(function(response){
+    //       //face recognition api call
+    //       var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
+    //       var payload  = { "image" : source };
+    //       console.log(payload);
+    //       console.log(urlFace);
+    //       $.ajax(urlFace, {
+    //         headers  : headers,
+    //           type: "POST",
+    //           data: JSON.stringify(payload),
+    //           dataType: "JSON"
+    //       }).done(function(response){
             
-            console.log(response);
-            //console.log(response.images[0].faces[0].height);
-          });
+    //         console.log(response);
+    //         //console.log(response.images[0].faces[0].height);
+    //       });
 
-          //emotion api call
-          var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
-          $.ajax(url, {
-            headers  : headers,
-              type: "POST",
-              dataType: "JSON"
-          }).done(function(response){
+    //       //emotion api call
+    //       var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
+    //       $.ajax(url, {
+    //         headers  : headers,
+    //           type: "POST",
+    //           dataType: "JSON"
+    //       }).done(function(response){
             
-            console.log(response);
+    //         console.log(response);
             
-          });
+    //       });
 
-          });
+    //       });
 
-        //end complete function  
-        });
-    }
-    else {
+    //     //end complete function  
+    //     });
+    // }
+    // else {
 
-      var cors_api_host = 'cors-anywhere.herokuapp.com';
-      var source = $("#input-url").val().trim();
+    //   var cors_api_host = 'cors-anywhere.herokuapp.com';
+    //   var source = $("#input-url").val().trim();
 
 
-          //header keys
-          var headers = {
-            "app_id"          : "59fe3f8b",
-            "app_key"         : "472b1119c610482500bfb00b6e897a1c"
-          };
+    //       //header keys
+    //       var headers = {
+    //         "app_id"          : "59fe3f8b",
+    //         "app_key"         : "472b1119c610482500bfb00b6e897a1c"
+    //       };
           
-          //face recognition api call
-          var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
-          var payload  = { "image" : source };
-          console.log(payload);
-          console.log(urlFace);
-          $.ajax(urlFace, {
-            headers  : headers,
-              type: "POST",
-              data: JSON.stringify(payload),
-              dataType: "JSON"
-          }).done(function(response){
+    //       //face recognition api call
+    //       var urlFace = "http://" + cors_api_host +  "/http://api.kairos.com/detect";
+    //       var payload  = { "image" : source };
+    //       console.log(payload);
+    //       console.log(urlFace);
+    //       $.ajax(urlFace, {
+    //         headers  : headers,
+    //           type: "POST",
+    //           data: JSON.stringify(payload),
+    //           dataType: "JSON"
+    //       }).done(function(response){
             
-            console.log(response);
-            //console.log(response.images[0].faces[0].height);
-          });
+    //         console.log(response);
+    //         //console.log(response.images[0].faces[0].height);
+    //       });
 
-          //emotion api call
-          var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
-          $.ajax(url, {
-            headers  : headers,
-              type: "POST",
-              dataType: "JSON"
-          }).done(function(response){
+    //       //emotion api call
+    //       var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
+    //       $.ajax(url, {
+    //         headers  : headers,
+    //           type: "POST",
+    //           dataType: "JSON"
+    //       }).done(function(response){
             
-            console.log(response);
+    //         console.log(response);
             
-          });
+    //       });
 
-    }
+    // }
 
 
 
-    
+    indexChart();
 
       // end on-click
       });
 
-  });  
+  // });  
 
 
 
 
-// This chart draws the background arc upon page refresh or reset button
+  // This function draws the background arc upon page refresh or reset button
+  var bgChart = function () {
     var chart = new Chartist.Pie('#chart1', {
-  series: [0,0,100],
-  labels: [""]
-}, {
-    donut: true,
-    donutWidth: 170,
-    startAngle: 270,
-    total: 200,
-    showLabel: false
-});
-
-chart.on('draw', function(data) {
-  if(data.type === 'slice') {
-    // Get the total path length in order to use for dash array animation
-    var pathLength = data.element._node.getTotalLength();
-
-    // Set a dasharray that matches the path length as prerequisite to animate dashoffset
-    data.element.attr({
-      'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+      series: [0,0,100],
+      labels: [""]
+    }, {
+      donut: true,
+      donutWidth: 170,
+      startAngle: 270,
+      total: 200,
+      showLabel: false
     });
 
-    // Create animation definition while also assigning an ID to the animation for later sync usage
-    var animationDefinition = {
-      'stroke-dashoffset': {
-        id: 'anim' + data.index,
-        dur: 10,
-        from: -pathLength + 'px',
-        to:  '0px',
-        easing: Chartist.Svg.Easing.easeOutQuint,
-        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
-        fill: 'freeze'
+    chart.on('draw', function(data) {
+      if(data.type === 'slice') {
+      // Get the total path length in order to use for dash array animation
+      var pathLength = data.element._node.getTotalLength();
+
+      // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+      data.element.attr({
+        'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+      });
+
+      // Create animation definition while also assigning an ID to the animation for later sync usage
+      var animationDefinition = {
+        'stroke-dashoffset': {
+          id: 'anim' + data.index,
+          dur: 10,
+          from: -pathLength + 'px',
+          to:  '0px',
+          easing: Chartist.Svg.Easing.easeOutQuint,
+          // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+          fill: 'freeze'
+        }
+      };
+
+      // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+      if(data.index !== 0) {
+        animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
       }
-    };
 
-    // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
-    if(data.index !== 0) {
-      animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+      // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+      data.element.attr({
+        'stroke-dashoffset': -pathLength + 'px'
+      });
+
+      // We can't use guided mode as the animations need to rely on setting begin manually
+      // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+      data.element.animate(animationDefinition, false);
     }
+  });
 
-    // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
-    data.element.attr({
-      'stroke-dashoffset': -pathLength + 'px'
-    });
-
-    // We can't use guided mode as the animations need to rely on setting begin manually
-    // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
-    data.element.animate(animationDefinition, false);
-  }
-});
+  };
 
 
-
-
+  bgChart();
 
 
 
@@ -344,65 +346,72 @@ chart.on('draw', function(data) {
     var creepIndex = textScore + impressionScore + faceScore;
     creepIndex = creepIndex.toFixed(1);
 
-      function displayIndextimeout() { 
-      setTimeout(displayTime, 4000);
-      };
-
-      function displayTime() {
-        $(".score").text("Creep Index: " + creepIndex);
-      };
 
 
+  var indexChart = function () {
+        function displayIndextimeout() { 
+        setTimeout(displayTime, 4000);
+        };
 
-// This chart displays our calculated index
+        function displayTime() {
+          $(".score").text("Creep Index: " + creepIndex);
+        };
+
+  // This function displays our calculated index chart
+
     var chart = new Chartist.Pie('#chart2', {
-  series: [creepIndex,0,0],
-  labels: [""]
-}, {
-    donut: true,
-    donutWidth: 170,
-    startAngle: 270,
-    total: 200,
-    showLabel: false
-});
-
-chart.on('draw', function(data) {
-  if(data.type === 'slice') {
-    // Get the total path length in order to use for dash array animation
-    var pathLength = data.element._node.getTotalLength();
-
-    // Set a dasharray that matches the path length as prerequisite to animate dashoffset
-    data.element.attr({
-      'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+      series: [creepIndex,0,0],
+      labels: [""]
+    }, {
+      donut: true,
+      donutWidth: 170,
+      startAngle: 270,
+      total: 200,
+      showLabel: false
     });
 
-    // Create animation definition while also assigning an ID to the animation for later sync usage
-    var animationDefinition = {
-      'stroke-dashoffset': {
-        id: 'anim' + data.index,
-        dur: 6000,
-        from: -pathLength + 'px',
-        to:  '0px',
-        easing: Chartist.Svg.Easing.easeOutQuint,
-        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
-        fill: 'freeze'
+
+
+    chart.on('draw', function(data) {
+      if(data.type === 'slice') {
+      // Get the total path length in order to use for dash array animation
+      var pathLength = data.element._node.getTotalLength();
+
+      // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+      data.element.attr({
+        'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+      });
+
+      // Create animation definition while also assigning an ID to the animation for later sync usage
+      var animationDefinition = {
+        'stroke-dashoffset': {
+          id: 'anim' + data.index,
+          dur: 6000,
+          from: -pathLength + 'px',
+          to:  '0px',
+          easing: Chartist.Svg.Easing.easeOutQuint,
+          // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+          fill: 'freeze'
+        }
+      };
+
+      // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+      if(data.index !== 0) {
+        animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
       }
-    };
 
-    // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
-    if(data.index !== 0) {
-      animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+      // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+      data.element.attr({
+        'stroke-dashoffset': -pathLength + 'px'
+      });
+
+      // We can't use guided mode as the animations need to rely on setting begin manually
+      // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+      data.element.animate(animationDefinition, false);
     }
+  });
 
-    // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
-    data.element.attr({
-      'stroke-dashoffset': -pathLength + 'px'
-    });
+    displayIndextimeout();
+  };
 
-    // We can't use guided mode as the animations need to rely on setting begin manually
-    // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
-    data.element.animate(animationDefinition, false);
-  }
-});
-
-displayIndextimeout();
+}); // End document ready
