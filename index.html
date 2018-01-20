@@ -3,17 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Project Trenchcoat</title>
-
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
 	<!-- Font Awesome -->
 	<script src="https://use.fontawesome.com/51fe8593c0.js"></script>
 
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
 
-	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-	  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+	<!-- Chartist -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+	<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 	<!-- Additional Styles -->
 	<link rel="stylesheet" href="assets/css/style.css">
@@ -22,7 +26,8 @@
 
 	<!-- Header -->
 	<div class="header">
-		<h3><i class="fa fa-search" aria-hidden="true"></i> Creeper Index</h3>
+		<img src="assets/img/svg/logo-v1.svg" alt="Creeper Index">
+		<h3>Creeper Index</h3>
 		<!-- <p>Get Started | History</p> -->
 	</div>
 
@@ -38,14 +43,15 @@
 				<!-- Top Content User Profile -->
 				<div class="row">
 					<div class="col">
-						<div class="profile-section section">
-						  <h3 class="">Welcome to the Creeper Index</h3>
-						  <p>The Crepper Index is a platform that allows users to conduct background checks.</p>
+						<div class="welcome-section section">
+						  <h4 class=""><i class="fa fa-info-circle" aria-hidden="true"></i> Welcome to Creeper Index</h4>
+						  <p>Creeper Index is a simple tool that lets you find out just how creeper someone is.</p>
 						  <hr>
+						  <h6>To get started:</h6>
 						  <ul>
-						  	<li>List Item</li>
-						  	<li>List Item</li>
-						  	<li>List Item</li>
+						  	<li>Use the analysis tool below</li>
+						  	<li>Submit info about the person you wish to know more about</li>
+						  	<li>Get comprehensive knowledge your friends and aquainatences</li>
 						  </ul>
 						</div>
 					</div>
@@ -79,7 +85,7 @@
 							  <!-- Text Area Input -->
 							  <div class="form-group">
 							    <label for="exampleFormControlTextarea1">Text Analysis</label>
-							    <textarea class="form-control" id="input-text" rows="3"></textarea>
+							    <textarea class="form-control" id="input-text" placeholder="Add text, tweet, etc" rows="3"></textarea>
 							  </div>
 							  <!-- File Upload Section -->
 							  <div class="row">
@@ -98,7 +104,7 @@
 								  </div>
 							  	</div>
 							  </div>
-							  <button type="submit" class="btn btn-primary form" id="form-submit">Submit</button>
+							  <a id="test" href="#test"><button type="submit" class="btn btn-primary form" id="form-submit">Start Analysis</button></a>
 							</form>	
 						</div>
 					</div>
@@ -109,39 +115,24 @@
 			<!-- Right -->
 			<div class="col-md-6">
 
-				<!-- TEST Top Content -->
-				<!-- <div class="row">
-					<div class="col">
-						<div class="card">
-						  <img class="card-img-top" src="http://via.placeholder.com/600x400" alt="Card image cap">
-						  <div class="card-body">
-						    <h5 class="card-title">Card title</h5>
-						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						    <a href="#" class="btn btn-primary">Go somewhere</a>
-						  </div>
-						</div>
-					</div>
-				</div> -->
-
 				<!-- Top Content -->
 				<div class="row mb-4">
 					<div class="col">
 						<!-- Creep Profile -->
-						<div class="creep-photo-section section">
-							<h3 class="section-title">User Profile</h3>
+						<div class="summary-section section">
+							<h3 class="section-title">Analysis Summary</h3>
 							<hr>
 							<img class="profile" src="http://via.placeholder.com/200x200" alt="Card image cap">
 							<div class="name-holder">
-								<h3 class="name">Name</h3>
+								<h4 class="name">Name</h4>
 						  		<p class="impression">Impression goes here</p>
 							</div>
 							<hr>
 							<h3 class="name">Text Analysis</h3>
 						  	<div id="textInfo"></div>
 						  	<hr>
-						  	<!-- <img class="chart-placeholder" src="http://via.placeholder.com/1000x250" alt=""> -->
 						  	<h3>Creep Meter</h3>
-						  	<div class="container">
+						  	<div class="chart-container">
 		                        <div>
 		                            <p class ="score"></p>
 		                        </div>
@@ -151,27 +142,6 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- Middle Content -->
-				<!-- Creep text -->
-				<!-- <div class="row mt-4">
-					<div class="col">
-						<div class="creep-text-section section">
-						  <h3 class="name">Name</h3>
-						  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-						</div>
-					</div>
-				</div> -->
-
-				<!-- Bottom Content -->
-				<!-- Creep Chart -->
-				<!-- <div class="row mt-4">
-					<div class="col">
-						<div class="creep-text-section section">
-						  <img class="chart-placeholder" src="http://via.placeholder.com/1000x250" alt="">
-						</div>
-					</div>
-				</div> -->
 
 			</div>
 
@@ -184,14 +154,23 @@
 			<div class="col">
 
 					<table class="table table-striped">
-					  <tbody>
+						<thead>
 					    <tr>
+					      <td><i class="fa fa-user" aria-hidden="true"></i></td>
+					      <td>Name</td>
+					      <td>Creep Rating</td>
+					      <td>Last Date</td>
+					      <td>User Experience</td>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <!-- <tr>
 					      <td><img src="http://via.placeholder.com/50x50" alt="Picture"></td>
 					      <td>Name</td>
 					      <td>Creep Index</td>
 					      <td>Last Date</td>
 					      <td>User Experience</td>
-					    </tr>
+					    </tr> -->
 					  </tbody>
 					</table>
 
