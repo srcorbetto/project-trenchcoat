@@ -21,6 +21,7 @@ $(document).ready(function(){
 
   //Face Impression value
   var impressionScore;
+  var impressionSummaryImage;
 
   // Face Click
   $("#face1").click(function() {
@@ -30,6 +31,8 @@ $(document).ready(function(){
     $("#face3").removeClass('face3-active');
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
+
+    impressionSummaryImage = "assets/img/svg/1-active.svg";
 
     impresssionScore = 33;
     console.log(impresssionScore);
@@ -43,6 +46,8 @@ $(document).ready(function(){
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
 
+    impressionSummaryImage = "assets/img/svg/2-active.svg";
+
     impresssionScore = 24.75;
     console.log(impresssionScore);
 
@@ -54,6 +59,8 @@ $(document).ready(function(){
     $("#face1").removeClass('face1-active');
     $("#face4").removeClass('face4-active');
     $("#face5").removeClass('face5-active');
+
+    impressionSummaryImage = "assets/img/svg/3-active.svg";
 
     impresssionScore = 16.5;
     console.log(impresssionScore);
@@ -67,6 +74,8 @@ $(document).ready(function(){
     $("#face1").removeClass('face1-active');
     $("#face5").removeClass('face5-active');
 
+    impressionSummaryImage = "assets/img/svg/4-active.svg";
+
     impresssionScore = 8.25;
     console.log(impresssionScore);
 
@@ -78,6 +87,8 @@ $(document).ready(function(){
     $("#face3").removeClass('face3-active');
     $("#face4").removeClass('face4-active');
     $("#face1").removeClass('face1-active');
+
+    impressionSummaryImage = "assets/img/svg/5-active.svg";
 
     impresssionScore = 0;
     console.log(impresssionScore);
@@ -146,7 +157,6 @@ $(document).ready(function(){
 
       var imageURL = $("#input-url").val().trim();
       console.log(imageURL);
-
 
       if (imageURL === "") {
 
@@ -299,7 +309,11 @@ $(document).ready(function(){
 
       }
 
+    // Build the table row and add info into into the different <td>'s
+    var creepInfoRow = $("<tr>");
+    creepInfoRow.html("<td>" +"<img class='history-profile' src='" + imageURL + "'>" );
 
+    $("tbody").append(creepInfoRow);
 
     indexChart();
 
