@@ -84,6 +84,15 @@ $(document).ready(function(){
 
   });
 
+  // Smooth scrolling
+  $(document).on('click', 'a[href^="#"]', function (event) {
+    event.preventDefault();
+
+    $('html, body').animate({
+        scrollTop: $($.attr(this, 'href')).offset().top
+    }, 500);
+});
+
 
   // Process of uploading the image
   $("#form-submit").on("click", function(e){
