@@ -27,6 +27,20 @@ $(document).ready(function() {
 
     var impressionSummaryImage;
 
+    var faceScore = 0;
+
+    var pitch = 0;
+
+    var anger = 0;
+
+    var disgust = 0;
+
+    var fear = 0;
+
+    var roll = 0;
+
+
+
 
     // Face Click
     //========================================================================
@@ -148,55 +162,13 @@ $(document).ready(function() {
     // ==================================================
     $("#Proceed").on("click", function(e) {
         e.preventDefault();
+        faceScore = 0;
 
         $("#modalContent").fadeToggle();
 
-        var str1 = $("#input-text").val().trim();
-            console.log(str1);
-            var longestWord = "";
-            var totalLetters = 0;
-            var wordLengthAverage = 0;
-            str1 = str1.replace(/[\r\n]+/g, " ");
-            var textArray = str1.split(" ");
 
-            for (var i = 0; i < textArray.length; i++) {
-                textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
-                // Average word length calculation
-                totalLetters = totalLetters + textArray[i].length;
-                wordLengthAverage = totalLetters / (i + 1);
-                // Find the longest word and save it and display it
-                if (textArray[i].length > longestWord.length) {
-                    longestWord = textArray[i];
-                    console.log("Longest word: " + longestWord);
-                };
-            };
-
-      var globalImageURL = '';
-
-
-            var faceScore = 0;
-            var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
-
-            if (textScore < 0) {
-                textScore = 0;
-            };
-
-            console.log("textScore:" + textScore);
-
-
-            var targetName = $("#input-name").val().trim();
-
-            creepIndex = textScore + impressionScore + faceScore;
-            creepIndex = creepIndex.toFixed(1);
-            console.log("creepIndex: " + creepIndex);
-
-            $(".personname").append(targetName);
-        
-      $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
-      $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+            
       
-            $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3));
-            $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
             // Get file
             var file = imageInput.files[0];
@@ -277,6 +249,18 @@ $(document).ready(function() {
                                     console.log('Status:', this.status);
                                     console.log('Headers:', this.getAllResponseHeaders());
                                     console.log(JSON.parse(this.responseText));
+
+                                    //face logic
+                                    pitch = response.images[0].faces[0].pitch;
+                                    roll = response.images[0].faces[0].roll;
+                                    if (pitch < 0) {
+                                        faceScore = faceScore + 6;
+                                        console.log(faceScore);
+                                    }
+                                    if (roll < -10 || roll > 10) {
+                                        faceScore = faceScore + 6;
+                                    }
+                                    console.log(faceScore);
                                 }
                             };
 
@@ -295,7 +279,29 @@ $(document).ready(function() {
                                 dataType: "JSON"
                             }).done(function(response) {
 
+                                console.log(response.frames[0].people[0].emotions.fear);
+                                fear = response.frames[0].people[0].emotions.fear;
+
+                                //face logic
+                                disgust = response.frames[0].people[0].emotions.disgust;
+                                anger = response.frames[0].people[0].emotions.anger;
+                                if (disgust > 0) {
+                                faceScore = faceScore + 7;
+                                }
+                                if (anger > 0) {
+                                    faceScore = faceScore + 7;
+                                }
+                                if (fear > 0) {
+                                    faceScore = faceScore + 7;
+                                    console.log(faceScore);
+                                }
+                                console.log(faceScore);
+
                                 console.log(response);
+
+                                wordLength();
+                                createTableRow(imageURL);
+                                indexChart();
 
                             });
 
@@ -330,7 +336,21 @@ $(document).ready(function() {
                     if (this.readyState === 4) {
                         console.log('Status:', this.status);
                         console.log('Headers:', this.getAllResponseHeaders());
-                        console.log(JSON.parse(this.responseText));
+                        var response = JSON.parse(this.responseText);
+
+
+                        //face logic
+                        pitch = response.images[0].faces[0].pitch;
+                        roll = response.images[0].faces[0].roll;
+                        if (pitch < 0) {
+                            faceScore = faceScore + 6;
+                            console.log(faceScore);
+                        }
+                        if (roll < -10 || roll > 10) {
+                            faceScore = faceScore + 6;
+                        }
+                        console.log(faceScore);
+
                     }
                 };
 
@@ -350,26 +370,92 @@ $(document).ready(function() {
 
                     console.log(response);
 
+                    console.log(response.frames[0].people[0].emotions.fear);
+                    fear = response.frames[0].people[0].emotions.fear;
+
+                    //face logic
+                    disgust = response.frames[0].people[0].emotions.disgust;
+                    anger = response.frames[0].people[0].emotions.anger;
+                    if (disgust > 0) {
+                    faceScore = faceScore + 7;
+                    }
+                    if (anger > 0) {
+                        faceScore = faceScore + 7;
+                    }
+                    if (fear > 0) {
+                        faceScore = faceScore + 7;
+                        console.log(faceScore);
+                    }
+                    console.log(faceScore);
+
+                    //call functions
+                    wordLength();
+                    createTableRow(imageURL);
+                    indexChart();
+
                 });
 
             }
 
-            // Build the table row and add info into into the different <td>'s
-            var creepInfoRow = $("<tr>");
-            creepInfoRow.html("<td>" + "<img class='history-profile' src='" + imageURL + "'>" + "<td>" + targetName + "</td>");
-
-            console.log("ROW MADE");
-
-            $("tbody").prepend(creepInfoRow);
-
-            indexChart();
-
     });
+
+    function createTableRow(url) {
+
+        var newImageUrl = url;
+        // Build the table row and add info into into the different <td>'s
+        var creepInfoRow = $("<tr>");
+        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + newImageUrl + "'>" + "<td>" + faceScore + "</td>");
+
+        //console.log("ROW MADE");
+
+        $("tbody").prepend(creepInfoRow);
+    }
 
     // });  
 
+        function wordLength() {
+            var str1 = $("#input-text").val().trim();
+            console.log(str1);
+            var longestWord = "";
+            var totalLetters = 0;
+            var wordLengthAverage = 0;
+            str1 = str1.replace(/[\r\n]+/g, " ");
+            var textArray = str1.split(" ");
+
+            for (var i = 0; i < textArray.length; i++) {
+                textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
+                // Average word length calculation
+                totalLetters = totalLetters + textArray[i].length;
+                wordLengthAverage = totalLetters / (i + 1);
+                // Find the longest word and save it and display it
+                if (textArray[i].length > longestWord.length) {
+                    longestWord = textArray[i];
+                    console.log("Longest word: " + longestWord);
+                };
+            };
 
 
+            
+            var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
+
+            if (textScore < 0) {
+                textScore = 0;
+            };
+
+            console.log("textScore:" + textScore);
+
+
+            var targetName = $("#input-name").val().trim();
+
+            creepIndex = textScore + impressionScore + faceScore;
+            creepIndex = creepIndex.toFixed(1);
+            console.log("creepIndex: " + creepIndex);
+
+            $(".personname").text(targetName);
+
+              $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+              $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+        }
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
