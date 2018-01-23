@@ -1,489 +1,512 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-	// Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBQ87_3Gzqz4wbtrpiCPnU_ohSwprut8So",
-    authDomain: "project-trenchcoat.firebaseapp.com",
-    databaseURL: "https://project-trenchcoat.firebaseio.com",
-    projectId: "project-trenchcoat",
-    storageBucket: "project-trenchcoat.appspot.com",
-    messagingSenderId: "404151361992"
-  };
-  firebase.initializeApp(config);
+    $(".table-content").html(localStorage.getItem("historyRow"));
 
-  var database = firebase.database();
+    // Initialize Firebase
+    //========================================================================
+    var config = {
+        apiKey: "AIzaSyBQ87_3Gzqz4wbtrpiCPnU_ohSwprut8So",
+        authDomain: "project-trenchcoat.firebaseapp.com",
+        databaseURL: "https://project-trenchcoat.firebaseio.com",
+        projectId: "project-trenchcoat",
+        storageBucket: "project-trenchcoat.appspot.com",
+        messagingSenderId: "404151361992"
+    };
+    firebase.initializeApp(config);
 
-  //Store URL
-  var newURL = '';
+    var database = firebase.database();
 
-  // Selector for the file input
-  var imageInput = document.getElementById("input-image");
+    // see if a table can be saved as variable
+    var table = $(".table").html();
+    console.log(table);
 
-  //Face Impression value
-  var impressionScore;
+    //Store URL
+    var newURL = '';
 
-  var creepIndex = 0;
+    // Selector for the file input
+    var imageInput = document.getElementById("input-image");
 
-  var impressionSummaryImage;
+    //Face Impression value
+    var impressionScore;
 
+    var creepIndex = 0;
 
-  // Face Click
-  $("#face1").click(function() {
-
-    $(this).toggleClass("face1-active");
-    $("#face2").removeClass('face2-active');
-    $("#face3").removeClass('face3-active');
-    $("#face4").removeClass('face4-active');
-    $("#face5").removeClass('face5-active');
-
-    impressionScore = 33;
-    console.log(impressionScore);
-    
-    impressionSummaryImage = "assets/img/svg/1-active.svg";
-
-    impressionScore = 33;
-    console.log(impressionScore);
-
-  });
-  $("#face2").click(function() {
-
-    $(this).toggleClass("face2-active");
-    $("#face1").removeClass('face1-active');
-    $("#face3").removeClass('face3-active');
-    $("#face4").removeClass('face4-active');
-    $("#face5").removeClass('face5-active');
-
-    impressionScore = 24.75;
-    console.log(impressionScore);
-
-    impressionSummaryImage = "assets/img/svg/2-active.svg";
-
-    impresssionScore = 24.75;
-    console.log(impressionScore);
+    var impressionSummaryImage;
 
 
-  });
-  $("#face3").click(function() {
+    // Face Click
+    //========================================================================
+    $("#face1").click(function() {
 
-    $(this).toggleClass("face3-active");
-    $("#face2").removeClass('face2-active');
-    $("#face1").removeClass('face1-active');
-    $("#face4").removeClass('face4-active');
-    $("#face5").removeClass('face5-active');
+        $(this).toggleClass("face1-active");
+        $("#face2").removeClass('face2-active');
+        $("#face3").removeClass('face3-active');
+        $("#face4").removeClass('face4-active');
+        $("#face5").removeClass('face5-active');
 
-    impressionScore = 16.5;
-    console.log(impressionScore);
+        impressionScore = 33;
+        console.log(impressionScore);
 
-    impressionSummaryImage = "assets/img/svg/3-active.svg";
+        impressionSummaryImage = "assets/img/svg/1-active.svg";
 
-    impressionScore = 16.5;
-    console.log(impressionScore);
-
-
-  });
-  $("#face4").click(function() {
-
-    $(this).toggleClass("face4-active");
-    $("#face2").removeClass('face2-active');
-    $("#face3").removeClass('face3-active');
-    $("#face1").removeClass('face1-active');
-    $("#face5").removeClass('face5-active');
-
-    impressionScore = 8.25;
-    console.log(impressionScore);
-
-    impressionSummaryImage = "assets/img/svg/4-active.svg";
-
-    impressionScore = 8.25;
-    console.log(impressionScore);
-
-
-  });
-  $("#face5").click(function() {
-
-    $(this).toggleClass("face5-active");
-    $("#face2").removeClass('face2-active');
-    $("#face3").removeClass('face3-active');
-    $("#face4").removeClass('face4-active');
-    $("#face1").removeClass('face1-active');
-
-    impressionScore = 0;
-    console.log(impressionScore);
-    
-    impressionSummaryImage = "assets/img/svg/5-active.svg";
-
-    impressionScore = 0;
-    console.log(impressionScore);
-
-  });
-
-  // Smooth scrolling
-  $(document).on('click', 'a[href^="#"]', function (event) {
-    event.preventDefault();
-
-    $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top
-    }, 500);
-});
-
-
-  // Process of uploading the image
-  $("#form-submit").on("click", function(e){
-    e.preventDefault();
-    $('#modal').css('display', 'block');
-    $('body').css('background-color', 'grey');
-
-    $('#goBack').on('click', function(event){
-      event.preventDefault(); 
-      $('#modal').css('display', 'none');
-      $('body').css('background-color', 'white');
+        impressionScore = 33;
+        console.log(impressionScore);
 
     });
-    $('#Proceed').on('click', function(event) {
+    $("#face2").click(function() {
 
-      event.preventDefault(); 
-      $('#modal').css('display', 'none');
-      $('body').css('background-color', 'white');
+        $(this).toggleClass("face2-active");
+        $("#face1").removeClass('face1-active');
+        $("#face3").removeClass('face3-active');
+        $("#face4").removeClass('face4-active');
+        $("#face5").removeClass('face5-active');
 
+        impressionScore = 24.75;
+        console.log(impressionScore);
 
+        impressionSummaryImage = "assets/img/svg/2-active.svg";
 
-      var str1 = $("#input-text").val().trim();
-      console.log(str1);
-      var longestWord = "";
-      var totalLetters = 0;
-      var wordLengthAverage = 0;
-      str1 = str1.replace(/[\r\n]+/g," ");
-      var textArray = str1.split(" ");
-
-      for (var i=0; i<textArray.length;i++){
-          textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g,""); 
-          // Average word length calculation
-          totalLetters = totalLetters + textArray[i].length;
-          wordLengthAverage = totalLetters/(i+1);
-          // Find the longest word and save it and display it
-          if (textArray[i].length > longestWord.length){
-              longestWord = textArray[i];
-              console.log("Longest word: " + longestWord);
-          };
-      };
-
-    
-    var faceScore = 0;
-    var textScore = 33 - ((2*wordLengthAverage) + longestWord.length);
-
-     if (textScore<0) {
-        textScore=0;
-     };
-
-     console.log("textScore:" + textScore);
+        impresssionScore = 24.75;
+        console.log(impressionScore);
 
 
-    var targetName = $("#input-name").val().trim();
+    });
+    $("#face3").click(function() {
 
-    creepIndex = textScore + impressionScore + faceScore;
-    creepIndex = creepIndex.toFixed(1);
-    console.log("creepIndex: " + creepIndex);
+        $(this).toggleClass("face3-active");
+        $("#face2").removeClass('face2-active');
+        $("#face1").removeClass('face1-active');
+        $("#face4").removeClass('face4-active');
+        $("#face5").removeClass('face5-active');
 
-    $(".personname").append(targetName);
-    $(".impression").append("<img src =" + impressionSummaryImage + ">");
-    $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3)); 
-    $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+        impressionScore = 16.5;
+        console.log(impressionScore);
 
-      // Get file
-      var file = imageInput.files[0];
+        impressionSummaryImage = "assets/img/svg/3-active.svg";
 
-      var imageURL = $("#input-url").val().trim();
-      console.log(imageURL);
+        impressionScore = 16.5;
+        console.log(impressionScore);
 
-      if (imageURL === "") {
 
-        console.log('this is working');
+    });
+    $("#face4").click(function() {
+
+        $(this).toggleClass("face4-active");
+        $("#face2").removeClass('face2-active');
+        $("#face3").removeClass('face3-active');
+        $("#face1").removeClass('face1-active');
+        $("#face5").removeClass('face5-active');
+
+        impressionScore = 8.25;
+        console.log(impressionScore);
+
+        impressionSummaryImage = "assets/img/svg/4-active.svg";
+
+        impressionScore = 8.25;
+        console.log(impressionScore);
+
+
+    });
+    $("#face5").click(function() {
+
+        $(this).toggleClass("face5-active");
+        $("#face2").removeClass('face2-active');
+        $("#face3").removeClass('face3-active');
+        $("#face4").removeClass('face4-active');
+        $("#face1").removeClass('face1-active');
+
+        impressionScore = 0;
+        console.log(impressionScore);
+
+        impressionSummaryImage = "assets/img/svg/5-active.svg";
+
+        impressionScore = 0;
+        console.log(impressionScore);
+
+    });
+
+    // Smooth scrolling
+    //========================================================================
+    $(document).on('click', 'a[href^="#"]', function(event) {
+        event.preventDefault();
+
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'href')).offset().top
+        }, 500);
+    });
+
+
+    // Process of uploading the image
+    //========================================================================
+    $("#form-submit").on("click", function(){
+
+      $("#modalContent").fadeToggle();
+
+    });
+
+    $("#goBack").on("click", function(){
+
+      $("#modalContent").fadeToggle();
+
+    });
+
+    //Submit Modal
+    // ==================================================
+    $("#Proceed").on("click", function(e) {
+        e.preventDefault();
+
+        $("#modalContent").fadeToggle();
+
+        var str1 = $("#input-text").val().trim();
+            console.log(str1);
+            var longestWord = "";
+            var totalLetters = 0;
+            var wordLengthAverage = 0;
+            str1 = str1.replace(/[\r\n]+/g, " ");
+            var textArray = str1.split(" ");
+
+            for (var i = 0; i < textArray.length; i++) {
+                textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
+                // Average word length calculation
+                totalLetters = totalLetters + textArray[i].length;
+                wordLengthAverage = totalLetters / (i + 1);
+                // Find the longest word and save it and display it
+                if (textArray[i].length > longestWord.length) {
+                    longestWord = textArray[i];
+                    console.log("Longest word: " + longestWord);
+                };
+            };
+
+      var globalImageURL = '';
+
+
+            var faceScore = 0;
+            var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
+
+
+            $(".impression").append("<img src =" + impressionSummaryImage + ">");
+            if (textScore < 0) {
+                textScore = 0;
+            };
+
+            console.log("textScore:" + textScore);
+
+
+            var targetName = $("#input-name").val().trim();
+
+            creepIndex = textScore + impressionScore + faceScore;
+            creepIndex = creepIndex.toFixed(1);
+            console.log("creepIndex: " + creepIndex);
+
+            $(".personname").append(targetName);
+        
+            $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+            $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+      
+            $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3));
+            $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
             // Get file
-        var file = imageInput.files[0];
-        console.log(file);
+            var file = imageInput.files[0];
 
-        // Create a storage reference
-        var storageRef = firebase.storage().ref("user_images/" + file.name);
+            var imageURL = $("#input-url").val().trim();
+            console.log(imageURL);
 
-        // Upload File
-        var task = storageRef.put(file);
+            if (imageURL === "") {
 
-        var newURL = '';
+                console.log('this is working');
 
-        // Update progress
-        task.on("state_changed",
+                // Get file
+                var file = imageInput.files[0];
+                console.log(file);
 
-          function progress(snapshot) {
+                // Create a storage reference
+                var storageRef = firebase.storage().ref("user_images/" + file.name);
 
-            console.log(snapshot);
+                // Upload File
+                var task = storageRef.put(file);
 
-          },
+                var newURL = '';
 
-          function error(err) {
+                // Update progress
+                task.on("state_changed",
 
-            console.log(err);
+                    function progress(snapshot) {
 
-          },
+                        console.log(snapshot);
 
-          function complete() {
+                    },
 
-            console.log("complete");
+                    function error(err) {
 
-            //Once complete - get the stored image URL
-            storageRef.getDownloadURL().then(function(url){
+                        console.log(err);
 
-            newURL = url; 
+                    },
 
-            console.log(url);
-            console.log(newURL);
+                    function complete() {
 
-            $(".profile").attr("src", url);
-            var cors_api_host = 'cors-anywhere.herokuapp.com';
+                        console.log("complete");
+
+                        //Once complete - get the stored image URL
+                        storageRef.getDownloadURL().then(function(url) {
+
+                            newURL = url;
+
+                            console.log(url);
+                            console.log(newURL);
+
+                            //Assign the hosted image into the globalImage var
+                            globalImageURL = newURL;
+                            console.log("globalImageURL: "+globalImageURL);
+
+                            $(".profile").attr("src", url);
+                            var cors_api_host = 'cors-anywhere.herokuapp.com';
 
 
-            // Gather link to image
+                            // Gather link to image
 
-            var source = newURL;
-            console.log(source);
+                            var source = newURL;
+                            console.log(source);
 
 
-            //header keys
-            var headers = {
-              "app_id"          : "59fe3f8b",
-              "app_key"         : "472b1119c610482500bfb00b6e897a1c"
-            };
-            
-            //face recognition api call
-            var request = new XMLHttpRequest();
+                            //header keys
+                            var headers = {
+                                "app_id": "59fe3f8b",
+                                "app_key": "472b1119c610482500bfb00b6e897a1c"
+                            };
 
-          request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
+                            //face recognition api call
+                            var request = new XMLHttpRequest();
 
-          request.setRequestHeader('app_id', '59fe3f8b');
-          request.setRequestHeader('app_key', '472b1119c610482500bfb00b6e897a1c');
-          request.setRequestHeader('Content-Type', 'application/JSON');
+                            request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
 
-          request.onreadystatechange = function () {
-            if (this.readyState === 4) {
-              console.log('Status:', this.status);
-              console.log('Headers:', this.getAllResponseHeaders());
-              console.log(JSON.parse(this.responseText));
+                            request.setRequestHeader('app_id', '59fe3f8b');
+                            request.setRequestHeader('app_key', '472b1119c610482500bfb00b6e897a1c');
+                            request.setRequestHeader('Content-Type', 'application/JSON');
+
+                            request.onreadystatechange = function() {
+                                if (this.readyState === 4) {
+                                    console.log('Status:', this.status);
+                                    console.log('Headers:', this.getAllResponseHeaders());
+                                    console.log(JSON.parse(this.responseText));
+                                }
+                            };
+
+                            var body = {
+                                'image': source
+                            }
+                            console.log('this is correct');
+                            request.send(JSON.stringify(body));
+
+
+                            //emotion api call
+                            var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
+                            $.ajax(url, {
+                                headers: headers,
+                                type: "POST",
+                                dataType: "JSON"
+                            }).done(function(response) {
+
+                                console.log(response);
+
+                            });
+
+                        });
+
+                        //end complete function  
+                    });
+            } else {
+
+
+                var cors_api_host = 'cors-anywhere.herokuapp.com';
+                var source = $("#input-url").val().trim();
+                $('.profile').attr('src', source);
+
+
+                //header keys
+                var headers = {
+                    "app_id": "59fe3f8b",
+                    "app_key": "472b1119c610482500bfb00b6e897a1c"
+                };
+
+                //face recognition api call
+                var request = new XMLHttpRequest();
+
+                request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
+
+                request.setRequestHeader('app_id', '59fe3f8b');
+                request.setRequestHeader('app_key', '472b1119c610482500bfb00b6e897a1c');
+                request.setRequestHeader('Content-Type', 'application/JSON');
+
+                request.onreadystatechange = function() {
+                    if (this.readyState === 4) {
+                        console.log('Status:', this.status);
+                        console.log('Headers:', this.getAllResponseHeaders());
+                        console.log(JSON.parse(this.responseText));
+                    }
+                };
+
+                var body = {
+                    'image': source
+                }
+                console.log('this is correct');
+                request.send(JSON.stringify(body));
+
+                //emotion api call
+                var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
+                $.ajax(url, {
+                    headers: headers,
+                    type: "POST",
+                    dataType: "JSON"
+                }).done(function(response) {
+
+                    console.log(response);
+
+                });
+
+                globalImageURL = source;
+
             }
-          };
 
-            var body = {
-              'image' : source
+            // Build the table row and add info into into the different <td>'s
+            var creepInfoRow = $("<tr>");
+            var historyRow = creepInfoRow.html("<td>" + "<img class='history-profile' src='" + globalImageURL + "'>" + "<td>" + targetName + "</td>");
+
+            $(".table-content").prepend(historyRow);
+
+            tableContent = $(".table-content").html();
+
+            localStorage.setItem("historyRow", tableContent);
+
+            console.log("ROW MADE");
+
+            $("tbody").prepend(creepInfoRow);
+
+            indexChart();
+
+    // });  
+
+
+    // This function draws the background arc upon page refresh or reset button
+    //========================================================================
+    var bgChart = function() {
+        var chart = new Chartist.Pie('#chart1', {
+            series: [0, 0, 100],
+            labels: [""]
+        }, {
+            donut: true,
+            donutWidth: 30,
+            startAngle: 270,
+            total: 200,
+            showLabel: false
+        });
+
+        chart.on('draw', function(data) {
+            if (data.type === 'slice') {
+                // Get the total path length in order to use for dash array animation
+                var pathLength = data.element._node.getTotalLength();
+
+                // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+                data.element.attr({
+                    'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+                });
+
+                // Create animation definition while also assigning an ID to the animation for later sync usage
+                var animationDefinition = {
+                    'stroke-dashoffset': {
+                        id: 'anim' + data.index,
+                        dur: 10,
+                        from: -pathLength + 'px',
+                        to: '0px',
+                        easing: Chartist.Svg.Easing.easeOutQuint,
+                        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+                        fill: 'freeze'
+                    }
+                };
+
+                // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+                if (data.index !== 0) {
+                    animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+                }
+
+                // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+                data.element.attr({
+                    'stroke-dashoffset': -pathLength + 'px'
+                });
+
+                // We can't use guided mode as the animations need to rely on setting begin manually
+                // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+                data.element.animate(animationDefinition, false);
             }
-            console.log('this is correct');
-            request.send(JSON.stringify(body));
-            
+        });
 
-            //emotion api call
-            var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
-            $.ajax(url, {
-              headers  : headers,
-                type: "POST",
-                dataType: "JSON"
-            }).done(function(response){
-              
-              console.log(response);
-              
-            });
-
-            });
-
-          //end complete function  
-          });
-      }
-      else {
+    };
 
 
-        var cors_api_host = 'cors-anywhere.herokuapp.com';
-        var source = $("#input-url").val().trim();
-        $('.profile').attr('src', source);
+    bgChart();
 
 
-            //header keys
-            var headers = {
-              "app_id"          : "59fe3f8b",
-              "app_key"         : "472b1119c610482500bfb00b6e897a1c"
-            };
-            
-             //face recognition api call
-            var request = new XMLHttpRequest();
-
-            request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
-
-            request.setRequestHeader('app_id', '59fe3f8b');
-            request.setRequestHeader('app_key', '472b1119c610482500bfb00b6e897a1c');
-            request.setRequestHeader('Content-Type', 'application/JSON');
-
-            request.onreadystatechange = function () {
-              if (this.readyState === 4) {
-                console.log('Status:', this.status);
-                console.log('Headers:', this.getAllResponseHeaders());
-                console.log(JSON.parse(this.responseText));
-              }
-            };
-
-            var body = {
-              'image' : source
-            }
-            console.log('this is correct');
-            request.send(JSON.stringify(body));
-
-            //emotion api call
-            var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source ;
-            $.ajax(url, {
-              headers  : headers,
-                type: "POST",
-                dataType: "JSON"
-            }).done(function(response){
-              
-              console.log(response);
-              
-            });
-
-      }
-
-    // Build the table row and add info into into the different <td>'s
-    var creepInfoRow = $("<tr>");
-    creepInfoRow.html("<td>" +"<img class='history-profile' src='" + imageURL + "'>" );
-
-    $("tbody").append(creepInfoRow);
-
-    indexChart();
-
-      // end on-click
-      });
-      });
-
-  // });  
-
-
-
-
-  // This function draws the background arc upon page refresh or reset button
-  var bgChart = function () {
-    var chart = new Chartist.Pie('#chart1', {
-      series: [0,0,0,0,100],
-      labels: [""]
-    }, {
-      donut: true,
-      donutWidth: 30,
-      startAngle: 270,
-      total: 200,
-      showLabel: false
-    });
-
-    chart.on('draw', function(data) {
-      if(data.type === 'slice') {
-      // Get the total path length in order to use for dash array animation
-      var pathLength = data.element._node.getTotalLength();
-
-      // Set a dasharray that matches the path length as prerequisite to animate dashoffset
-      data.element.attr({
-        'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
-      });
-
-      // Create animation definition while also assigning an ID to the animation for later sync usage
-      var animationDefinition = {
-        'stroke-dashoffset': {
-          id: 'anim' + data.index,
-          dur: 10,
-          from: -pathLength + 'px',
-          to:  '0px',
-          easing: Chartist.Svg.Easing.easeOutQuint,
-          // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
-          fill: 'freeze'
-        }
-      };
-
-      // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
-      if(data.index !== 0) {
-        animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
-      }
-
-      // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
-      data.element.attr({
-        'stroke-dashoffset': -pathLength + 'px'
-      });
-
-      // We can't use guided mode as the animations need to rely on setting begin manually
-      // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
-      data.element.animate(animationDefinition, false);
-    }
-  });
-
-  };
-
-
-  bgChart();
-
-
- // This function displays our calculated index chart
-  var indexChart = function () {
-        function displayIndextimeout() { 
-        setTimeout(displayTime, 4000);
+    // This function displays our calculated index chart
+    var indexChart = function() {
+        function displayIndextimeout() {
+            setTimeout(displayTime, 4000);
         };
 
         function displayTime() {
-          $(".score").text("Creep Index: " + creepIndex);
+            $(".score").text("Creep Index: " + creepIndex);
         };
 
-    var chart = new Chartist.Pie('#chart2', {
-      series: [creepIndex],
-      labels: [""]
-    }, {
-      donut: true,
-      donutWidth: 30,
-      startAngle: 270,
-      total: 200,
-      showLabel: false
-    });
+        var chart = new Chartist.Pie('#chart2', {
+            series: [creepIndex, 0, 0],
+            labels: [""]
+        }, {
+            donut: true,
+            donutWidth: 30,
+            startAngle: 270,
+            total: 200,
+            showLabel: false
+        });
 
+        chart.on('draw', function(data) {
+            if (data.type === 'slice') {
+                // Get the total path length in order to use for dash array animation
+                var pathLength = data.element._node.getTotalLength();
 
+                // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+                data.element.attr({
+                    'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+                });
 
-    chart.on('draw', function(data) {
-      if(data.type === 'slice') {
-      // Get the total path length in order to use for dash array animation
-      var pathLength = data.element._node.getTotalLength();
+                // Create animation definition while also assigning an ID to the animation for later sync usage
+                var animationDefinition = {
+                    'stroke-dashoffset': {
+                        id: 'anim' + data.index,
+                        dur: 6000,
+                        from: -pathLength + 'px',
+                        to: '0px',
+                        easing: Chartist.Svg.Easing.easeOutQuint,
+                        // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+                        fill: 'freeze'
+                    }
+                };
 
-      // Set a dasharray that matches the path length as prerequisite to animate dashoffset
-      data.element.attr({
-        'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
-      });
+                // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+                if (data.index !== 0) {
+                    animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+                }
 
-      // Create animation definition while also assigning an ID to the animation for later sync usage
-      var animationDefinition = {
-        'stroke-dashoffset': {
-          id: 'anim' + data.index,
-          dur: 6000,
-          from: -pathLength + 'px',
-          to:  '0px',
-          easing: Chartist.Svg.Easing.easeOutQuint,
-          // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
-          fill: 'freeze'
-        }
-      };
+                // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+                data.element.attr({
+                    'stroke-dashoffset': -pathLength + 'px'
+                });
 
-      // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
-      if(data.index !== 0) {
-        animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
-      }
+                // We can't use guided mode as the animations need to rely on setting begin manually
+                // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+                data.element.animate(animationDefinition, false);
+            }
+        });
 
-      // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
-      data.element.attr({
-        'stroke-dashoffset': -pathLength + 'px'
-      });
-
-      // We can't use guided mode as the animations need to rely on setting begin manually
-      // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
-      data.element.animate(animationDefinition, false);
-    }
-  });
-
-    displayIndextimeout();
-  };
+        displayIndextimeout();
+    };
 
 }); // End document ready
