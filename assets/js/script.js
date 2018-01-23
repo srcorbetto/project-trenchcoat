@@ -183,8 +183,6 @@ $(document).ready(function() {
             var faceScore = 0;
             var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
 
-
-            $(".impression").append("<img src =" + impressionSummaryImage + ">");
             if (textScore < 0) {
                 textScore = 0;
             };
@@ -384,7 +382,11 @@ $(document).ready(function() {
 
             indexChart();
 
+    });
+
     // });  
+
+
 
 
     // This function draws the background arc upon page refresh or reset button
