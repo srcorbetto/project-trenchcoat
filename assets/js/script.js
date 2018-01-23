@@ -166,10 +166,6 @@ $(document).ready(function() {
 
         $("#modalContent").fadeToggle();
 
-
-            
-      
-
             // Get file
             var file = imageInput.files[0];
 
@@ -235,7 +231,7 @@ $(document).ready(function() {
                                 "app_key": "472b1119c610482500bfb00b6e897a1c"
                             };
 
-                            //face recognition api call
+                            //face recognition api call======================================
                             var request = new XMLHttpRequest();
 
                             request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
@@ -248,7 +244,7 @@ $(document).ready(function() {
                                 if (this.readyState === 4) {
                                     console.log('Status:', this.status);
                                     console.log('Headers:', this.getAllResponseHeaders());
-                                    console.log(JSON.parse(this.responseText));
+                                    var response = JSON.parse(this.responseText);
 
                                     //face logic
                                     pitch = response.images[0].faces[0].pitch;
@@ -261,6 +257,9 @@ $(document).ready(function() {
                                         faceScore = faceScore + 6;
                                     }
                                     console.log(faceScore);
+                                    wordLength();
+                                    createTableRow(source);
+                                    indexChart();
                                 }
                             };
 
@@ -269,41 +268,6 @@ $(document).ready(function() {
                             }
                             console.log('this is correct');
                             request.send(JSON.stringify(body));
-
-
-                            //emotion api call
-                            var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
-                            $.ajax(url, {
-                                headers: headers,
-                                type: "POST",
-                                dataType: "JSON"
-                            }).done(function(response) {
-
-                                console.log(response.frames[0].people[0].emotions.fear);
-                                fear = response.frames[0].people[0].emotions.fear;
-
-                                //face logic
-                                disgust = response.frames[0].people[0].emotions.disgust;
-                                anger = response.frames[0].people[0].emotions.anger;
-                                if (disgust > 0) {
-                                faceScore = faceScore + 7;
-                                }
-                                if (anger > 0) {
-                                    faceScore = faceScore + 7;
-                                }
-                                if (fear > 0) {
-                                    faceScore = faceScore + 7;
-                                    console.log(faceScore);
-                                }
-                                console.log(faceScore);
-
-                                console.log(response);
-
-                                wordLength();
-                                createTableRow(imageURL);
-                                indexChart();
-
-                            });
 
                         });
 
@@ -323,7 +287,7 @@ $(document).ready(function() {
                     "app_key": "472b1119c610482500bfb00b6e897a1c"
                 };
 
-                //face recognition api call
+                //face recognition api call==================================================
                 var request = new XMLHttpRequest();
 
                 request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
@@ -360,7 +324,8 @@ $(document).ready(function() {
                 console.log('this is correct');
                 request.send(JSON.stringify(body));
 
-                //emotion api call
+
+                //emotion api call==============================================================================
                 var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
                 $.ajax(url, {
                     headers: headers,
