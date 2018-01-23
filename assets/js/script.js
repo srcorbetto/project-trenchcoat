@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $(".table-content").html(localStorage.getItem("historyRow"));
+
     // Initialize Firebase
     //========================================================================
     var config = {
@@ -13,6 +15,10 @@ $(document).ready(function() {
     firebase.initializeApp(config);
 
     var database = firebase.database();
+
+    // see if a table can be saved as variable
+    var table = $(".table").html();
+    console.log(table);
 
     //Store URL
     var newURL = '';
@@ -192,8 +198,8 @@ $(document).ready(function() {
 
             $(".personname").append(targetName);
         
-      $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
-      $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+            $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+            $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
       
             $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3));
             $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
@@ -246,6 +252,10 @@ $(document).ready(function() {
 
                             console.log(url);
                             console.log(newURL);
+
+                            //Assign the hosted image into the globalImage var
+                            globalImageURL = newURL;
+                            console.log("globalImageURL: "+globalImageURL);
 
                             $(".profile").attr("src", url);
                             var cors_api_host = 'cors-anywhere.herokuapp.com';
@@ -352,11 +362,19 @@ $(document).ready(function() {
 
                 });
 
+                globalImageURL = source;
+
             }
 
             // Build the table row and add info into into the different <td>'s
             var creepInfoRow = $("<tr>");
-            creepInfoRow.html("<td>" + "<img class='history-profile' src='" + imageURL + "'>" + "<td>" + targetName + "</td>");
+            var historyRow = creepInfoRow.html("<td>" + "<img class='history-profile' src='" + globalImageURL + "'>" + "<td>" + targetName + "</td>");
+
+            $(".table-content").prepend(historyRow);
+
+            tableContent = $(".table-content").html();
+
+            localStorage.setItem("historyRow", tableContent);
 
             console.log("ROW MADE");
 
