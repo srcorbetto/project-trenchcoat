@@ -33,6 +33,20 @@ $(document).ready(function() {
 
     var impressionSummaryImage;
 
+    var faceScore = 0;
+
+    var pitch = 0;
+
+    var anger = 0;
+
+    var disgust = 0;
+
+    var fear = 0;
+
+    var roll = 0;
+
+
+
 
     // Face Click
     //========================================================================
@@ -154,57 +168,9 @@ $(document).ready(function() {
     // ==================================================
     $("#Proceed").on("click", function(e) {
         e.preventDefault();
+        faceScore = 0;
 
         $("#modalContent").fadeToggle();
-
-        var str1 = $("#input-text").val().trim();
-            console.log(str1);
-            var longestWord = "";
-            var totalLetters = 0;
-            var wordLengthAverage = 0;
-            str1 = str1.replace(/[\r\n]+/g, " ");
-            var textArray = str1.split(" ");
-
-            for (var i = 0; i < textArray.length; i++) {
-                textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
-                // Average word length calculation
-                totalLetters = totalLetters + textArray[i].length;
-                wordLengthAverage = totalLetters / (i + 1);
-                // Find the longest word and save it and display it
-                if (textArray[i].length > longestWord.length) {
-                    longestWord = textArray[i];
-                    console.log("Longest word: " + longestWord);
-                };
-            };
-
-      var globalImageURL = '';
-
-
-            var faceScore = 0;
-            var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
-
-
-            $(".impression").append("<img src =" + impressionSummaryImage + ">");
-            if (textScore < 0) {
-                textScore = 0;
-            };
-
-            console.log("textScore:" + textScore);
-
-
-            var targetName = $("#input-name").val().trim();
-
-            creepIndex = textScore + impressionScore + faceScore;
-            creepIndex = creepIndex.toFixed(1);
-            console.log("creepIndex: " + creepIndex);
-
-            $(".personname").append(targetName);
-        
-            $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
-            $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
-      
-            $("#textInfo").append("<br>" + "Average Word Length: " + wordLengthAverage.toFixed(3));
-            $("#textInfo").append("<br>" + "Longest Word: " + longestWord + ", " + longestWord.length + " letters");
 
             // Get file
             var file = imageInput.files[0];
@@ -275,7 +241,7 @@ $(document).ready(function() {
                                 "app_key": "472b1119c610482500bfb00b6e897a1c"
                             };
 
-                            //face recognition api call
+                            //face recognition api call======================================
                             var request = new XMLHttpRequest();
 
                             request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
@@ -288,7 +254,22 @@ $(document).ready(function() {
                                 if (this.readyState === 4) {
                                     console.log('Status:', this.status);
                                     console.log('Headers:', this.getAllResponseHeaders());
-                                    console.log(JSON.parse(this.responseText));
+                                    var response = JSON.parse(this.responseText);
+
+                                    //face logic
+                                    pitch = response.images[0].faces[0].pitch;
+                                    roll = response.images[0].faces[0].roll;
+                                    if (pitch < 0) {
+                                        faceScore = faceScore + 6;
+                                        console.log(faceScore);
+                                    }
+                                    if (roll < -10 || roll > 10) {
+                                        faceScore = faceScore + 6;
+                                    }
+                                    console.log(faceScore);
+                                    wordLength();
+                                    createTableRow(source);
+                                    indexChart();
                                 }
                             };
 
@@ -297,19 +278,6 @@ $(document).ready(function() {
                             }
                             console.log('this is correct');
                             request.send(JSON.stringify(body));
-
-
-                            //emotion api call
-                            var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
-                            $.ajax(url, {
-                                headers: headers,
-                                type: "POST",
-                                dataType: "JSON"
-                            }).done(function(response) {
-
-                                console.log(response);
-
-                            });
 
                         });
 
@@ -329,7 +297,7 @@ $(document).ready(function() {
                     "app_key": "472b1119c610482500bfb00b6e897a1c"
                 };
 
-                //face recognition api call
+                //face recognition api call==================================================
                 var request = new XMLHttpRequest();
 
                 request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
@@ -342,7 +310,21 @@ $(document).ready(function() {
                     if (this.readyState === 4) {
                         console.log('Status:', this.status);
                         console.log('Headers:', this.getAllResponseHeaders());
-                        console.log(JSON.parse(this.responseText));
+                        var response = JSON.parse(this.responseText);
+
+
+                        //face logic
+                        pitch = response.images[0].faces[0].pitch;
+                        roll = response.images[0].faces[0].roll;
+                        if (pitch < 0) {
+                            faceScore = faceScore + 6;
+                            console.log(faceScore);
+                        }
+                        if (roll < -10 || roll > 10) {
+                            faceScore = faceScore + 6;
+                        }
+                        console.log(faceScore);
+
                     }
                 };
 
@@ -352,7 +334,8 @@ $(document).ready(function() {
                 console.log('this is correct');
                 request.send(JSON.stringify(body));
 
-                //emotion api call
+
+                //emotion api call==============================================================================
                 var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
                 $.ajax(url, {
                     headers: headers,
@@ -362,36 +345,101 @@ $(document).ready(function() {
 
                     console.log(response);
 
+                    console.log(response.frames[0].people[0].emotions.fear);
+                    fear = response.frames[0].people[0].emotions.fear;
+
+                    //face logic
+                    disgust = response.frames[0].people[0].emotions.disgust;
+                    anger = response.frames[0].people[0].emotions.anger;
+                    if (disgust > 0) {
+                    faceScore = faceScore + 7;
+                    }
+                    if (anger > 0) {
+                        faceScore = faceScore + 7;
+                    }
+                    if (fear > 0) {
+                        faceScore = faceScore + 7;
+                        console.log(faceScore);
+                    }
+                    console.log(faceScore);
+
+                    //call functions
+                    wordLength();
+                    createTableRow(imageURL);
+                    indexChart();
+
                 });
 
                 globalImageURL = source;
 
             }
 
-            // Build the table row and add info into into the different <td>'s
-            var creepInfoRow = $("<tr>");
-            var historyRow = creepInfoRow.html("<td>" + "<img class='history-profile' src='" + globalImageURL + "'>" + "<td>" + targetName + "</td>");
+    });
 
-            $(".table-content").prepend(historyRow);
+    function createTableRow(url) {
 
-            tableContent = $(".table-content").html();
+        var newImageUrl = url;
+        // Build the table row and add info into into the different <td>'s
+        var creepInfoRow = $("<tr>");
+        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + newImageUrl + "'>" + "<td>" + faceScore + "</td>");
 
-            localStorage.setItem("historyRow", tableContent);
+        //console.log("ROW MADE");
 
-            console.log("ROW MADE");
+        $("tbody").prepend(creepInfoRow);
+    }
 
-            $("tbody").prepend(creepInfoRow);
+      
 
-            indexChart();
+    function wordLength() {
+        var str1 = $("#input-text").val().trim();
+        console.log(str1);
+        var longestWord = "";
+        var totalLetters = 0;
+        var wordLengthAverage = 0;
+        str1 = str1.replace(/[\r\n]+/g, " ");
+        var textArray = str1.split(" ");
 
-    // });  
+        for (var i = 0; i < textArray.length; i++) {
+            textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
+            // Average word length calculation
+            totalLetters = totalLetters + textArray[i].length;
+            wordLengthAverage = totalLetters / (i + 1);
+            // Find the longest word and save it and display it
+            if (textArray[i].length > longestWord.length) {
+                longestWord = textArray[i];
+                console.log("Longest word: " + longestWord);
+            };
+        };
+
+
+        
+        var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
+
+        if (textScore < 0) {
+            textScore = 0;
+        };
+
+        console.log("textScore:" + textScore);
+
+        var targetName = $("#input-name").val().trim();
+
+        creepIndex = textScore + impressionScore + faceScore;
+        creepIndex = creepIndex.toFixed(1);
+        console.log("creepIndex: " + creepIndex);
+
+
+        $(".personname").text(targetName);
+
+          $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+          $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+    }
 
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
     var bgChart = function() {
         var chart = new Chartist.Pie('#chart1', {
-            series: [0, 0, 100],
+            series: [0, 0, 0,0,100],
             labels: [""]
         }, {
             donut: true,
@@ -453,7 +501,7 @@ $(document).ready(function() {
         };
 
         function displayTime() {
-            $(".score").text("Creep Index: " + creepIndex);
+            $(".score").text(creepIndex);
         };
 
         var chart = new Chartist.Pie('#chart2', {
