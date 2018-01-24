@@ -53,6 +53,11 @@ p, label, li, td, div {
 	width: 150px;
 
 }
+
+.personname {
+	margin-left : 20px;
+}
+
 #faceStats {
 	margin-top: 20px;
 }
@@ -348,9 +353,11 @@ p, label, li, td, div {
 }*/
 
 /*Small Breakpoint*/
-@media (max-width: 575px) {
+@media (max-width: 767px) {
 	.profile {
 		width: 100%;
+		object-fit: none;
+		height: auto;
 	}
 
 	.name-holder {

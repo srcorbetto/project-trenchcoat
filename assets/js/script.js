@@ -45,12 +45,15 @@ $(document).ready(function() {
 
     var roll = 0;
 
+    var impressionSelected = false;
 
 
 
     // Face Click
     //========================================================================
     $("#face1").click(function() {
+
+        impressionSelected = true;
 
         $(this).toggleClass("face1-active");
         $("#face2").removeClass('face2-active');
@@ -68,6 +71,8 @@ $(document).ready(function() {
 
     });
     $("#face2").click(function() {
+
+        impressionSelected = true;
 
         $(this).toggleClass("face2-active");
         $("#face1").removeClass('face1-active');
@@ -87,6 +92,8 @@ $(document).ready(function() {
     });
     $("#face3").click(function() {
 
+        impressionSelected = true;
+
         $(this).toggleClass("face3-active");
         $("#face2").removeClass('face2-active');
         $("#face1").removeClass('face1-active');
@@ -105,6 +112,8 @@ $(document).ready(function() {
     });
     $("#face4").click(function() {
 
+        impressionSelected = true;
+
         $(this).toggleClass("face4-active");
         $("#face2").removeClass('face2-active');
         $("#face3").removeClass('face3-active');
@@ -122,6 +131,8 @@ $(document).ready(function() {
 
     });
     $("#face5").click(function() {
+
+        impressionSelected = true;
 
         $(this).toggleClass("face5-active");
         $("#face2").removeClass('face2-active');
@@ -158,7 +169,16 @@ $(document).ready(function() {
     //========================================================================
     $("#form-submit").on("click", function(){
 
-      $("#modalContent").fadeToggle();
+        //Validate Form
+        if ($("#input-name").val().length === 0 || $("#input-text").val().length === 0 ||impressionScore === false || ($("#input-url").val().length === 0 ) || $("#input-url").val() === "" ) {
+
+            alert("FILL OUT THE FORM");
+
+        } else {
+
+            $("#modalContent").fadeToggle();
+
+        }
 
     });
 
