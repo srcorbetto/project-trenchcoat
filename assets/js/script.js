@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+    $(".table-content").html(localStorage.getItem("History Table"));
+
+    // Set Modal Content
+    $(".loading-logo").css("display", "none");
+    $("#modal-initial").css("display", "block");
+
     // Initialize Firebase
     //========================================================================
     var config = {
@@ -135,7 +141,11 @@ $(document).ready(function() {
 
     // Smooth scrolling
     //========================================================================
-    $(document).on('click', 'a[href^="#"]', function(event) {
+
+    // if ($(window).width() < 768) {
+    //     };
+
+        $(document).on('click', 'a[href^="#"]', function(event) {
         event.preventDefault();
 
         $('html, body').animate({
@@ -164,8 +174,10 @@ $(document).ready(function() {
         e.preventDefault();
         faceScore = 0;
 
-        $("#modalContent").fadeToggle();
-
+        //Play loading gif
+        // $("#modalContent").html("<img class='loading-logo' src='assets/img/svg/logo-v1.svg'>")
+        $(".loading-logo").css("display", "block");
+        $("#modal-initial").css("display", "none");
             // Get file
             var file = imageInput.files[0];
 
@@ -214,6 +226,10 @@ $(document).ready(function() {
 
                             console.log(url);
                             console.log(newURL);
+
+                            //Assign the hosted image into the globalImage var
+                            globalImageURL = newURL;
+                            console.log("globalImageURL: "+globalImageURL);
 
                             $(".profile").attr("src", url);
                             var cors_api_host = 'cors-anywhere.herokuapp.com';
@@ -409,9 +425,20 @@ $(document).ready(function() {
                 
                 });
 
+                globalImageURL = source;
+
             }
 
-    });
+            //Clear Inputs
+            $("#input-url").val("");
+            $("#input-image").val("");
+            $("#face1").removeClass("face1-active");
+            $("#face2").removeClass('face2-active');
+            $("#face3").removeClass('face3-active');
+            $("#face4").removeClass('face4-active');
+            $("#face5").removeClass('face5-active');
+
+    }); //end of modal submit
 
     function createTableRow(url) {
 
@@ -422,6 +449,12 @@ $(document).ready(function() {
         //console.log("ROW MADE");
 
         $("tbody").prepend(creepInfoRow);
+
+        var historyTable = $(".table-content").html();
+
+        console.log(historyTable);
+
+        localStorage.setItem("History Table", historyTable);
     }
 
       
@@ -473,18 +506,31 @@ $(document).ready(function() {
 
         console.log("textScore:" + textScore);
 
-
         var targetName = $("#input-name").val().trim();
 
         creepIndex = textScore + impressionScore + faceScore;
         creepIndex = creepIndex.toFixed(1);
         console.log("creepIndex: " + creepIndex);
 
+
         $(".personname").text(targetName);
 
           $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
           $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+
+          //Clear Inputs
+            $("#input-name").val("");
+            $("#input-text").val("");
+
+          //Fades modal after text analysis
+          $("#modalContent").fadeToggle(function(){
+
+            $(".loading-logo").css("display", "none");
+            $("#modal-initial").css("display", "block");
+
+          });
     }
+
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
