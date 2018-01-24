@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $(".table-content").html(localStorage.getItem("historyRow"));
+
     // Initialize Firebase
     //========================================================================
     var config = {
@@ -13,6 +15,10 @@ $(document).ready(function() {
     firebase.initializeApp(config);
 
     var database = firebase.database();
+
+    // see if a table can be saved as variable
+    var table = $(".table").html();
+    console.log(table);
 
     //Store URL
     var newURL = '';
@@ -215,6 +221,10 @@ $(document).ready(function() {
                             console.log(url);
                             console.log(newURL);
 
+                            //Assign the hosted image into the globalImage var
+                            globalImageURL = newURL;
+                            console.log("globalImageURL: "+globalImageURL);
+
                             $(".profile").attr("src", url);
                             var cors_api_host = 'cors-anywhere.herokuapp.com';
 
@@ -360,6 +370,8 @@ $(document).ready(function() {
 
                 });
 
+                globalImageURL = source;
+
             }
 
     });
@@ -409,18 +421,19 @@ $(document).ready(function() {
 
         console.log("textScore:" + textScore);
 
-
         var targetName = $("#input-name").val().trim();
 
         creepIndex = textScore + impressionScore + faceScore;
         creepIndex = creepIndex.toFixed(1);
         console.log("creepIndex: " + creepIndex);
 
+
         $(".personname").text(targetName);
 
           $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
           $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
     }
+
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
@@ -545,3 +558,5 @@ $(document).ready(function() {
     };
 
 }); // End document ready
+
+});
