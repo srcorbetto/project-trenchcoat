@@ -47,6 +47,19 @@ p, label, li, td, div {
 	font-weight: bold;
 	font-size: 32px;
 }
+.impression {
+	margin-left : 20px;
+	height: 150px;
+	width: 150px;
+
+}
+#faceStats {
+	margin-top: 20px;
+}
+.creepSummary {
+	text-align: center;
+	font-size: 32px;
+}
 
 /*Head Section Styling*/
 /*===========================================================*/

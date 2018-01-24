@@ -262,7 +262,7 @@ $(document).ready(function() {
                                     console.log('Headers:', this.getAllResponseHeaders());
                                     var response = JSON.parse(this.responseText);
 
-                                    //face logic
+                                    //face logic==========================================================
                                     pitch = response.images[0].faces[0].pitch;
                                     roll = response.images[0].faces[0].roll;
                                     if (pitch < 0) {
@@ -272,10 +272,36 @@ $(document).ready(function() {
                                     if (roll < -10 || roll > 10) {
                                         faceScore = faceScore + 6;
                                     }
-                                    console.log(faceScore);
+
+                                    pitch = response.images[0].faces[0].pitch;
+                                    roll = response.images[0].faces[0].roll;
+                                    age = response.images[0].faces[0].attributes.age;
+                                    gender = response.images[0].faces[0].attributes.gender.type;
+                                    glasses = response.images[0].faces[0].attributes.glasses;
+
+                                    if (glasses === 'Eye') {
+                                        $('#glasses').text('Yes');
+                                    }
+                                    else {
+                                        $('#glasses').text('No');
+                                    }
+
+                                    if (pitch < 0) {
+                                        faceScore = faceScore + 6;
+                                        console.log(faceScore);
+                                    }
+                                    if (roll < -10 || roll > 10) {
+                                        faceScore = faceScore + 6;
+                                    }
+                                    $('#ageNumber').text(age);
+                                    $('#gender').text(gender);
+
+
+                                    //Analysis functions called============================================
                                     wordLength();
                                     createTableRow(source);
                                     indexChart();
+                                    creepAnalysis();
                                 }
                             };
 
@@ -287,10 +313,10 @@ $(document).ready(function() {
 
                         });
 
-                        //end complete function  
+ 
                     });
-            } else {
-
+            } 
+            else {
 
                 var cors_api_host = 'cors-anywhere.herokuapp.com';
                 var source = $("#input-url").val().trim();
@@ -317,11 +343,24 @@ $(document).ready(function() {
                         console.log('Status:', this.status);
                         console.log('Headers:', this.getAllResponseHeaders());
                         var response = JSON.parse(this.responseText);
+                        console.log(response);
 
 
                         //face logic
                         pitch = response.images[0].faces[0].pitch;
                         roll = response.images[0].faces[0].roll;
+                        age = response.images[0].faces[0].attributes.age;
+                        gender = response.images[0].faces[0].attributes.gender.type;
+                        glasses = response.images[0].faces[0].attributes.glasses;
+                        console.log(age);
+
+                        if (glasses === 'Eye') {
+                            $('#glasses').text('Yes');
+                        }
+                        else {
+                            $('#glasses').text('No');
+                        }
+
                         if (pitch < 0) {
                             faceScore = faceScore + 6;
                             console.log(faceScore);
@@ -329,6 +368,10 @@ $(document).ready(function() {
                         if (roll < -10 || roll > 10) {
                             faceScore = faceScore + 6;
                         }
+                        $('#ageNumber').text(age);
+                        $('#gender').text(gender);
+                        //$('#glasses').text(glasses);
+
                         console.log(faceScore);
 
                     }
@@ -346,15 +389,19 @@ $(document).ready(function() {
                 $.ajax(url, {
                     headers: headers,
                     type: "POST",
-                    dataType: "JSON"
+                    dataType: "JSON",
                 }).done(function(response) {
 
                     console.log(response);
 
-                    console.log(response.frames[0].people[0].emotions.fear);
-                    fear = response.frames[0].people[0].emotions.fear;
+                    if (response.frames[0].people.length === 0) {
+                        console.log("error");
+                    }
+                    else {
+                    
 
                     //face logic
+                    fear = response.frames[0].people[0].emotions.fear;
                     disgust = response.frames[0].people[0].emotions.disgust;
                     anger = response.frames[0].people[0].emotions.anger;
                     if (disgust > 0) {
@@ -367,13 +414,15 @@ $(document).ready(function() {
                         faceScore = faceScore + 7;
                         console.log(faceScore);
                     }
-                    console.log(faceScore);
+                }
+                    
 
                     //call functions
                     wordLength();
                     createTableRow(imageURL);
                     indexChart();
-
+                    creepAnalysis();
+                
                 });
 
                 globalImageURL = source;
@@ -393,10 +442,9 @@ $(document).ready(function() {
 
     function createTableRow(url) {
 
-        var newImageUrl = url;
         // Build the table row and add info into into the different <td>'s
         var creepInfoRow = $("<tr>");
-        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + newImageUrl + "'>" + "<td>" + faceScore + "</td>");
+        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + url + "'>" + "<td>" + faceScore + "</td>");
 
         //console.log("ROW MADE");
 
@@ -410,6 +458,21 @@ $(document).ready(function() {
     }
 
       
+
+    function creepAnalysis() {
+        if (creepIndex<=25){
+            $(".creepSummary").text("Your mother would APPROVE");
+        }
+       else if (creepIndex<=50 && creepIndex>25){
+            $(".creepSummary").text("Proceed with CAUTION");
+        }
+       else if (creepIndex<=75 && creepIndex>50){
+            $(".creepSummary").text("High Potential for Creepiness");
+        }
+       else {
+            $(".creepSummary").text("SUPER CREEPY - Beware!");
+       }
+    }
 
     function wordLength() {
         var str1 = $("#input-text").val().trim();
@@ -435,7 +498,8 @@ $(document).ready(function() {
 
         
         var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
-
+        $('.impression').empty();
+        $('.impression').append('<img src=' + impressionSummaryImage + ">");
         if (textScore < 0) {
             textScore = 0;
         };
