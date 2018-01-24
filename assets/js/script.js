@@ -376,57 +376,57 @@ $(document).ready(function() {
         $("tbody").prepend(creepInfoRow);
     }
 
-    // });  
+      
 
-        function wordLength() {
-            var str1 = $("#input-text").val().trim();
-            console.log(str1);
-            var longestWord = "";
-            var totalLetters = 0;
-            var wordLengthAverage = 0;
-            str1 = str1.replace(/[\r\n]+/g, " ");
-            var textArray = str1.split(" ");
+    function wordLength() {
+        var str1 = $("#input-text").val().trim();
+        console.log(str1);
+        var longestWord = "";
+        var totalLetters = 0;
+        var wordLengthAverage = 0;
+        str1 = str1.replace(/[\r\n]+/g, " ");
+        var textArray = str1.split(" ");
 
-            for (var i = 0; i < textArray.length; i++) {
-                textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
-                // Average word length calculation
-                totalLetters = totalLetters + textArray[i].length;
-                wordLengthAverage = totalLetters / (i + 1);
-                // Find the longest word and save it and display it
-                if (textArray[i].length > longestWord.length) {
-                    longestWord = textArray[i];
-                    console.log("Longest word: " + longestWord);
-                };
+        for (var i = 0; i < textArray.length; i++) {
+            textArray[i] = textArray[i].replace(/[^a-zA-Z]+/g, "");
+            // Average word length calculation
+            totalLetters = totalLetters + textArray[i].length;
+            wordLengthAverage = totalLetters / (i + 1);
+            // Find the longest word and save it and display it
+            if (textArray[i].length > longestWord.length) {
+                longestWord = textArray[i];
+                console.log("Longest word: " + longestWord);
             };
+        };
 
 
-            
-            var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
+        
+        var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
 
-            if (textScore < 0) {
-                textScore = 0;
-            };
+        if (textScore < 0) {
+            textScore = 0;
+        };
 
-            console.log("textScore:" + textScore);
+        console.log("textScore:" + textScore);
 
 
-            var targetName = $("#input-name").val().trim();
+        var targetName = $("#input-name").val().trim();
 
-            creepIndex = textScore + impressionScore + faceScore;
-            creepIndex = creepIndex.toFixed(1);
-            console.log("creepIndex: " + creepIndex);
+        creepIndex = textScore + impressionScore + faceScore;
+        creepIndex = creepIndex.toFixed(1);
+        console.log("creepIndex: " + creepIndex);
 
-            $(".personname").text(targetName);
+        $(".personname").text(targetName);
 
-              $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
-              $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
-        }
+          $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
+          $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
+    }
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
     var bgChart = function() {
         var chart = new Chartist.Pie('#chart1', {
-            series: [0, 0, 100],
+            series: [0, 0, 0,0,100],
             labels: [""]
         }, {
             donut: true,
@@ -488,7 +488,7 @@ $(document).ready(function() {
         };
 
         function displayTime() {
-            $(".score").text("Creep Index: " + creepIndex);
+            $(".score").text(creepIndex);
         };
 
         var chart = new Chartist.Pie('#chart2', {

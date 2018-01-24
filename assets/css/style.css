@@ -35,6 +35,17 @@ p, label, li, td, div {
 	vertical-align: middle;
 }
 
+#creepLabel {
+	background-color: #6c6c6c;
+	color: white;
+	padding: 5px;
+}
+#score {
+	color: #e8ca55;
+	font-weight: bold;
+	font-size: 32px;
+}
+
 /*Head Section Styling*/
 /*===========================================================*/
 .header {
@@ -199,6 +210,10 @@ p, label, li, td, div {
 	padding-left: 130px;
 	padding-top: 30px;
 	position: absolute;
+	top: 100px;
+	left: 120px;
+	color: #ffd11a;
+	font-weight: bold;
 }
 
 
@@ -222,7 +237,9 @@ p, label, li, td, div {
 	position:relative;
 	min-height: 250px;
 }
-
+.ct-series.a .ct-slice-donut {
+	stroke: #f9461c;
+}
 /*.meterbox {background-color: #f6f6f6;
 	background-color: salmon;
 }*/
