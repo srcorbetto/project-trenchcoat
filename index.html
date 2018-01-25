@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Project Trenchcoat</title>
+	<title>Creeper Index</title>
 
 	<!-- Font Awesome -->
 	<script src="https://use.fontawesome.com/51fe8593c0.js"></script>
@@ -14,6 +14,9 @@
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+	<!-- Icon -->
+	<link rel="icon" type="image/png" href="assets/img/icon.png" />
 
 	<!-- Chartist -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -59,13 +62,13 @@
             
 						<div class="welcome-section section">
 						  <h4 class=""><i class="fa fa-info-circle" aria-hidden="true"></i> Welcome to Creeper Index</h4>
-						  <p>Creeper Index is a simple tool that lets you find out just how creeper someone is.</p>
+						  <p>Creeper Index is a simple tool that lets you find out how creepy someone is.</p>
 						  <hr>
 						  <h6>To get started:</h6>
 						  <ul>
 						  	<li>Use the analysis tool below</li>
-						  	<li>Submit info about the person you wish to know more about</li>
-						  	<li>Get comprehensive knowledge your friends and aquainatences</li>
+						  	<li>Submit info about the person you wish to find out more about</li>
+						  	<li>Get a comprehensive personality breakdown on your friends and aquaintences</li>
 						  </ul>
 						</div>
 					</div>
@@ -134,13 +137,13 @@
 					<div class="col">
 						<!-- Creep Profile -->
 						<div class="summary-section section">
-							<h3 class="section-title">Analysis Summary</h3>
+							<h3 class="section-title">Summary</h3>
 							<hr>
-							<img class="profile" src="assets/img/placeholder-400x400.jpg" alt="Placeholder">
+							<img class="profile" src="assets/img/placeholder-image.png" alt="Placeholder">
 							<div class="name-holder">
 
-								<h4 class="personname">Mike</h4>
-						  		<p class="impression">Impression goes here</p>
+								<h4 class="personname"></h4>
+						  		<p class="impression"></p>
                 
 							</div>
 							<div id= "faceStats">
@@ -151,8 +154,8 @@
 							<hr>
 							<h3 class="name">Text Analysis</h3>
 						  	<div id="textInfo">
-						  		<p id="textInfo1">Text</p>
-						  		<p id='textInfo2'>Text</p>
+						  		<p id="textInfo1"></p>
+						  		<p id='textInfo2'></p>
 						  	</div>
 						  	<hr>
 						  	<h3 id='creepLabel'>Creep Index: <span id='score'></span></h3>
@@ -185,18 +188,11 @@
 					      <td><i class="fa fa-user" aria-hidden="true"></i></td>
 					      <td>Name</td>
 					      <td>Impression</td>
-					      <td>Creep Rating</td>
+					      <td>Creeper Rating</td>
 					      <td>Last Date</td>
 					    </tr>
 					  </thead>
 					  <tbody class="table-content">
-					    <!-- <tr>
-					      <td><img src="http://via.placeholder.com/50x50" alt="Picture"></td>
-					      <td>Name</td>
-					      <td>Creep Index</td>
-					      <td>Last Date</td>
-					      <td>User Experience</td>
-					    </tr> -->
 					  </tbody>
 					</table>
 
