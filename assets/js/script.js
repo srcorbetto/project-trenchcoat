@@ -288,25 +288,13 @@ $(document).ready(function() {
                                     console.log('Headers:', this.getAllResponseHeaders());
                                     var response = JSON.parse(this.responseText);
 
-                                    if ((response.Errors[0].ErrCode == 5002) || (response.Errors[0].ErrCode === 5000) || (response.Errors[0].ErrCode === 5001) || (response.Error[0].ErrCode === 5003) || (response.ErrCode === 3001)) {
-                                        console.log('error');
-                                        $('#glasses').text('Cannot Determine');
-                                        $('#ageNumber').text('Unkown');
-                                        $('#gender').text('N/A');
-                                        wordLength();
-                                        createTableRow(source);
-                                        indexChart();
-                                        creepAnalysis();
-
-                                    }
-                                    else {
                                     
                                         faceLogic(response);
                                         wordLength();
                                         createTableRow(source);
                                         indexChart();
                                         creepAnalysis();
-                                    }
+                   
                                 }
                             };
 
@@ -351,17 +339,8 @@ $(document).ready(function() {
                         console.log(response);
                         //console.log(response.Errors[0].ErrCode);
 
-                        if ((response.Errors[0].ErrCode == 5002) || (response.Errors[0].ErrCode === 5000) || (response.Errors[0].ErrCode === 5001) || (response.Error[0].ErrCode === 5003) || (response.ErrCode === 3001)) {
-                            console.log('error');
-                            $('#glasses').text('Cannot Determine');
-                            $('#ageNumber').text('Unkown');
-                            $('#gender').text('N/A');
-
-                        }
-                        else {
-
                         faceLogic(response);
-                        }
+                        
                     }
                 };
 
