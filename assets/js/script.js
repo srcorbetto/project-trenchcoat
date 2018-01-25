@@ -37,8 +37,6 @@ $(document).ready(function() {
 
     var pitch = 0;
 
-    var together = "";
-
     var anger = 0;
 
     var disgust = 0;
@@ -47,11 +45,11 @@ $(document).ready(function() {
 
     var roll = 0;
 
-
-    var targetName = "";
+    var together = "";
 
     var impressionSelected = false;
 
+    var targetName = "";
 
 
 
@@ -156,13 +154,6 @@ $(document).ready(function() {
 
     });
 
-    // Smooth scrolling
-    //========================================================================
-
-    $(document).on('click', 'a[href^="#"]', function(event) {
-        event.preventDefault();
-
-
     // Process of uploading the image
     //========================================================================
     $("#form-submit").on("click", function(e){
@@ -209,20 +200,16 @@ $(document).ready(function() {
         e.preventDefault();
         faceScore = 0;
 
-        $("#modalContent").fadeToggle();
-
         //Play loading gif
         // $("#modalContent").html("<img class='loading-logo' src='assets/img/svg/logo-v1.svg'>")
         $(".loading-logo").fadeIn();
         $("#modal-initial").css("display", "none");
-
             // Get file
             var file = imageInput.files[0];
 
             var imageURL = $("#input-url").val().trim();
             console.log(imageURL);
 
-            // Using File Upload==========================================================
             if (imageURL === "") {
 
                 console.log('this is working');
@@ -266,6 +253,10 @@ $(document).ready(function() {
                             console.log(url);
                             console.log(newURL);
 
+                            //Assign the hosted image into the globalImage var
+                            globalImageURL = newURL;
+                            console.log("globalImageURL: "+globalImageURL);
+
                             $(".profile").attr("src", url);
                             var cors_api_host = 'cors-anywhere.herokuapp.com';
 
@@ -297,9 +288,8 @@ $(document).ready(function() {
                                     console.log('Headers:', this.getAllResponseHeaders());
                                     var response = JSON.parse(this.responseText);
 
-                                    //face logic==========================================================
+                                    
                                     faceLogic(response);
-
 
                                     //Analysis functions called============================================
                                     wordLength();
@@ -320,7 +310,6 @@ $(document).ready(function() {
  
                     });
             } 
-            // USING URL ONLY========================================================
             else {
 
                 var cors_api_host = 'cors-anywhere.herokuapp.com';
@@ -351,6 +340,7 @@ $(document).ready(function() {
                         console.log(response);
 
                         faceLogic(response);
+
                     }
                 };
 
@@ -371,6 +361,7 @@ $(document).ready(function() {
 
                     console.log(response);
                     emotionLogic(response);
+                    
 
                     //call functions
                     wordLength();
@@ -380,9 +371,23 @@ $(document).ready(function() {
                 
                 });
 
+                globalImageURL = source;
+
             }
 
-    });
+            //Clear Inputs
+            $("#input-url").val("");
+            $("#input-image").val("");
+            $("#face1").removeClass("face1-active");
+            $("#face2").removeClass('face2-active');
+            $("#face3").removeClass('face3-active');
+            $("#face4").removeClass('face4-active');
+            $("#face5").removeClass('face5-active');
+
+            $("#faceStats").fadeIn();
+
+    }); //end of modal submit
+
 
     function emotionLogic(response) {
         if ((response.code === 5000) || (response.code === 5001) || (response.code === 5002) || (response.code === 5003)) {
@@ -392,6 +397,7 @@ $(document).ready(function() {
             console.log("error");
         }
         else {
+        console.log("this works fine!!!!!!!!!!!!!!!!!!!");
         fear = response.frames[0].people[0].emotions.fear;
         disgust = response.frames[0].people[0].emotions.disgust;
         anger = response.frames[0].people[0].emotions.anger;
@@ -409,13 +415,6 @@ $(document).ready(function() {
     }
 
     function faceLogic(response) {
-        if ((response.Errors[0].ErrCode === 5000) || (response.Errors[0].ErrCode === 5001) || (response.Errors[0].ErrCode === 5002) || (response.Errors[0].ErrCode === 5003)) {
-            console.log('error');
-            $('#glasses').text('Cannot Determine');
-            $('#ageNumber').text('Unkown');
-            $('#gender').text('N/A');
-        }
-        else {
             console.log(response);
             pitch = response.images[0].faces[0].pitch;
             roll = response.images[0].faces[0].roll;
@@ -448,7 +447,7 @@ $(document).ready(function() {
             //$('#glasses').text(glasses);
 
             console.log(faceScore);
-        }
+        
     }
 
     function createTableRow(url) {
@@ -463,8 +462,7 @@ $(document).ready(function() {
         var historyTable = $(".table-content").html();
         localStorage.setItem("History Table", historyTable);
     }
-
-      
+ 
 
     function creepAnalysis() {
         if (creepIndex<=25){
@@ -473,7 +471,7 @@ $(document).ready(function() {
        else if (creepIndex<=50 && creepIndex>25){
             $(".creepSummary").text("Proceed with CAUTION");
         }
-       else if (creepIndex<=70 && creepIndex>50){
+       else if (creepIndex<=75 && creepIndex>50){
             $(".creepSummary").text("High Potential for Creepiness");
         }
        else {
@@ -513,12 +511,12 @@ $(document).ready(function() {
 
         console.log("textScore:" + textScore);
 
-
         targetName = $("#input-name").val().trim();
 
         creepIndex = textScore + impressionScore + faceScore;
         creepIndex = creepIndex.toFixed(1);
         console.log("creepIndex: " + creepIndex);
+
 
         $(".personname").text(targetName);
 
@@ -537,6 +535,7 @@ $(document).ready(function() {
 
           });
     }
+
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
