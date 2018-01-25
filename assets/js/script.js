@@ -347,11 +347,21 @@ $(document).ready(function() {
                     if (this.readyState === 4) {
                         console.log('Status:', this.status);
                         console.log('Headers:', this.getAllResponseHeaders());
+                        var stringResponse = this.responseText;
                         var response = JSON.parse(this.responseText);
                         console.log(response);
                         //console.log(response.Errors[0].ErrCode);
+                        
+                        if (stringResponse[2] === 'E') {
+                            console.log('error');
+                            $('#glasses').text('Cannot Determine');
+                            $('#ageNumber').text('Unkown');
+                            $('#gender').text('N/A');
+                        }
+                        else if (response.images[0].faces.length > 0) {
 
-                        faceLogic(response);
+                            faceLogic(response);
+                        }
                         
                     }
                 };
