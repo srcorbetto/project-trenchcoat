@@ -41,6 +41,9 @@
 		<h3>Creeper Index</h3>
 	</div>
 
+	<!-- Error -->
+	<div class="error"></div>
+
 	<!-- Container -->
 	<div class="container-fluid bg">
 
@@ -95,7 +98,7 @@
 							  </div>
 							  <!-- Text Area Input -->
 							  <div class="form-group">
-							    <label for="exampleFormControlTextarea1">Text Analysis</label>
+							    <label for="exampleFormControlTextarea1">Text Analysis<span class="required">*</span></label>
 							    <textarea class="form-control" id="input-text" placeholder="Add text, tweet, etc" rows="3"></textarea>
 							  </div>
 							  <!-- File Upload Section -->
@@ -103,14 +106,14 @@
 							  	<!-- URL Input -->
 							  	<div class="col-md-6">
 							  		<div class="form-group">
-									    <label for="input-url">Photo from URL</label>
+									    <label for="input-url">Photo from URL or</label>
 									    <input type="text" class="form-control" id="input-url" placeholder="Add URL">
 								    </div>
 							  	</div>
 							  	<!-- File Input -->
 							  	<div class="col-md-6">
 							  		<div class="form-group">
-									    <label for="input-image">Upload an Image</label>
+									    <label for="input-image">Upload an Image<span class="required">*</span></label>
 									    <input value="upload" type="file" class="form-control-file" id="input-image">
 								  </div>
 							  	</div>
