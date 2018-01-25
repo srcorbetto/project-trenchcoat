@@ -37,6 +37,8 @@ $(document).ready(function() {
 
     var pitch = 0;
 
+    var together = "";
+
     var anger = 0;
 
     var disgust = 0;
@@ -44,6 +46,8 @@ $(document).ready(function() {
     var fear = 0;
 
     var roll = 0;
+
+    var targetName = "";
 
 
 
@@ -141,11 +145,7 @@ $(document).ready(function() {
 
     // Smooth scrolling
     //========================================================================
-
-    // if ($(window).width() < 768) {
-    //     };
-
-        $(document).on('click', 'a[href^="#"]', function(event) {
+    $(document).on('click', 'a[href^="#"]', function(event) {
         event.preventDefault();
 
         $('html, body').animate({
@@ -174,16 +174,15 @@ $(document).ready(function() {
         e.preventDefault();
         faceScore = 0;
 
-        //Play loading gif
-        // $("#modalContent").html("<img class='loading-logo' src='assets/img/svg/logo-v1.svg'>")
-        $(".loading-logo").css("display", "block");
-        $("#modal-initial").css("display", "none");
+        $("#modalContent").fadeToggle();
+
             // Get file
             var file = imageInput.files[0];
 
             var imageURL = $("#input-url").val().trim();
             console.log(imageURL);
 
+            // Using File Upload==========================================================
             if (imageURL === "") {
 
                 console.log('this is working');
@@ -227,10 +226,6 @@ $(document).ready(function() {
                             console.log(url);
                             console.log(newURL);
 
-                            //Assign the hosted image into the globalImage var
-                            globalImageURL = newURL;
-                            console.log("globalImageURL: "+globalImageURL);
-
                             $(".profile").attr("src", url);
                             var cors_api_host = 'cors-anywhere.herokuapp.com';
 
@@ -263,38 +258,7 @@ $(document).ready(function() {
                                     var response = JSON.parse(this.responseText);
 
                                     //face logic==========================================================
-                                    pitch = response.images[0].faces[0].pitch;
-                                    roll = response.images[0].faces[0].roll;
-                                    if (pitch < 0) {
-                                        faceScore = faceScore + 6;
-                                        console.log(faceScore);
-                                    }
-                                    if (roll < -10 || roll > 10) {
-                                        faceScore = faceScore + 6;
-                                    }
-
-                                    pitch = response.images[0].faces[0].pitch;
-                                    roll = response.images[0].faces[0].roll;
-                                    age = response.images[0].faces[0].attributes.age;
-                                    gender = response.images[0].faces[0].attributes.gender.type;
-                                    glasses = response.images[0].faces[0].attributes.glasses;
-
-                                    if (glasses === 'Eye') {
-                                        $('#glasses').text('Yes');
-                                    }
-                                    else {
-                                        $('#glasses').text('No');
-                                    }
-
-                                    if (pitch < 0) {
-                                        faceScore = faceScore + 6;
-                                        console.log(faceScore);
-                                    }
-                                    if (roll < -10 || roll > 10) {
-                                        faceScore = faceScore + 6;
-                                    }
-                                    $('#ageNumber').text(age);
-                                    $('#gender').text(gender);
+                                    faceLogic(response);
 
 
                                     //Analysis functions called============================================
@@ -316,6 +280,7 @@ $(document).ready(function() {
  
                     });
             } 
+            // USING URL ONLY========================================================
             else {
 
                 var cors_api_host = 'cors-anywhere.herokuapp.com';
@@ -345,35 +310,7 @@ $(document).ready(function() {
                         var response = JSON.parse(this.responseText);
                         console.log(response);
 
-
-                        //face logic
-                        pitch = response.images[0].faces[0].pitch;
-                        roll = response.images[0].faces[0].roll;
-                        age = response.images[0].faces[0].attributes.age;
-                        gender = response.images[0].faces[0].attributes.gender.type;
-                        glasses = response.images[0].faces[0].attributes.glasses;
-                        console.log(age);
-
-                        if (glasses === 'Eye') {
-                            $('#glasses').text('Yes');
-                        }
-                        else {
-                            $('#glasses').text('No');
-                        }
-
-                        if (pitch < 0) {
-                            faceScore = faceScore + 6;
-                            console.log(faceScore);
-                        }
-                        if (roll < -10 || roll > 10) {
-                            faceScore = faceScore + 6;
-                        }
-                        $('#ageNumber').text(age);
-                        $('#gender').text(gender);
-                        //$('#glasses').text(glasses);
-
-                        console.log(faceScore);
-
+                        faceLogic(response);
                     }
                 };
 
@@ -393,29 +330,7 @@ $(document).ready(function() {
                 }).done(function(response) {
 
                     console.log(response);
-
-                    if (response.frames[0].people.length === 0) {
-                        console.log("error");
-                    }
-                    else {
-                    
-
-                    //face logic
-                    fear = response.frames[0].people[0].emotions.fear;
-                    disgust = response.frames[0].people[0].emotions.disgust;
-                    anger = response.frames[0].people[0].emotions.anger;
-                    if (disgust > 0) {
-                    faceScore = faceScore + 7;
-                    }
-                    if (anger > 0) {
-                        faceScore = faceScore + 7;
-                    }
-                    if (fear > 0) {
-                        faceScore = faceScore + 7;
-                        console.log(faceScore);
-                    }
-                }
-                    
+                    emotionLogic(response);
 
                     //call functions
                     wordLength();
@@ -425,35 +340,87 @@ $(document).ready(function() {
                 
                 });
 
-                globalImageURL = source;
-
             }
 
-            //Clear Inputs
-            $("#input-url").val("");
-            $("#input-image").val("");
-            $("#face1").removeClass("face1-active");
-            $("#face2").removeClass('face2-active');
-            $("#face3").removeClass('face3-active');
-            $("#face4").removeClass('face4-active');
-            $("#face5").removeClass('face5-active');
+    });
 
-    }); //end of modal submit
+    function emotionLogic(response) {
+        if ((response.code === 5000) || (response.code === 5001) || (response.code === 5002) || (response.code === 5003)) {
+            console.log('wrong file type');
+        }
+        else if (response.frames[0].people.length === 0) {
+            console.log("error");
+        }
+        else {
+        fear = response.frames[0].people[0].emotions.fear;
+        disgust = response.frames[0].people[0].emotions.disgust;
+        anger = response.frames[0].people[0].emotions.anger;
+        if (disgust > 0) {
+        faceScore = faceScore + 6;
+        }
+        if (anger > 0) {
+            faceScore = faceScore + 6;
+        }
+        if (fear > 0) {
+            faceScore = faceScore + 6;
+            console.log(faceScore);
+        }
+        }
+    }
+
+    function faceLogic(response) {
+        if ((response.Errors[0].ErrCode === 5000) || (response.Errors[0].ErrCode === 5001) || (response.Errors[0].ErrCode === 5002) || (response.Errors[0].ErrCode === 5003)) {
+            console.log('error');
+            $('#glasses').text('Cannot Determine');
+            $('#ageNumber').text('Unkown');
+            $('#gender').text('N/A');
+        }
+        else {
+            console.log(response);
+            pitch = response.images[0].faces[0].pitch;
+            roll = response.images[0].faces[0].roll;
+            age = response.images[0].faces[0].attributes.age;
+            gender = response.images[0].faces[0].attributes.gender.type;
+            glasses = response.images[0].faces[0].attributes.glasses;
+            together = response.images[0].faces[0].attributes.lips;
+            console.log(age);
+
+            if (glasses === 'Eye') {
+                $('#glasses').text('Yes');
+            }
+            else {
+                $('#glasses').text('No');
+            }
+
+            if (together === "Together") {
+                faceScore = faceScore + 3;
+            }
+
+            if (pitch < 0) {
+                faceScore = faceScore + 6;
+                console.log(faceScore);
+            }
+            if (roll < -10 || roll > 10) {
+                faceScore = faceScore + 6;
+            }
+            $('#ageNumber').text(age);
+            $('#gender').text(gender);
+            //$('#glasses').text(glasses);
+
+            console.log(faceScore);
+        }
+    }
 
     function createTableRow(url) {
 
         // Build the table row and add info into into the different <td>'s
         var creepInfoRow = $("<tr>");
-        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + url + "'>" + "<td>" + faceScore + "</td>");
+        var now = moment().format("HH:mm:ss");
 
-        //console.log("ROW MADE");
 
+        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + url + "'>" +  "<td>" + targetName + "</td>" + "<td>" + '<img class=history-profile src=' + impressionSummaryImage + ">" + "<td>" + creepIndex + "</td>" + "<td>" + now + "</td>");
         $("tbody").prepend(creepInfoRow);
-
         var historyTable = $(".table-content").html();
-
-        console.log(historyTable);
-
         localStorage.setItem("History Table", historyTable);
     }
 
@@ -466,7 +433,7 @@ $(document).ready(function() {
        else if (creepIndex<=50 && creepIndex>25){
             $(".creepSummary").text("Proceed with CAUTION");
         }
-       else if (creepIndex<=75 && creepIndex>50){
+       else if (creepIndex<=70 && creepIndex>50){
             $(".creepSummary").text("High Potential for Creepiness");
         }
        else {
@@ -506,31 +473,18 @@ $(document).ready(function() {
 
         console.log("textScore:" + textScore);
 
-        var targetName = $("#input-name").val().trim();
+
+        targetName = $("#input-name").val().trim();
 
         creepIndex = textScore + impressionScore + faceScore;
         creepIndex = creepIndex.toFixed(1);
         console.log("creepIndex: " + creepIndex);
 
-
         $(".personname").text(targetName);
 
           $("#textInfo1").text("Average Word Length: " + wordLengthAverage.toFixed(3)); 
           $("#textInfo2").text("Longest Word: " + longestWord + ", " + longestWord.length + " letters");
-
-          //Clear Inputs
-            $("#input-name").val("");
-            $("#input-text").val("");
-
-          //Fades modal after text analysis
-          $("#modalContent").fadeToggle(function(){
-
-            $(".loading-logo").css("display", "none");
-            $("#modal-initial").css("display", "block");
-
-          });
     }
-
 
     // This function draws the background arc upon page refresh or reset button
     //========================================================================
