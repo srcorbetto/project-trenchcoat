@@ -45,7 +45,11 @@ $(document).ready(function() {
 
     var roll = 0;
 
+    var together = "";
+
     var impressionSelected = false;
+
+    var targetName = "";
 
 
 
@@ -149,21 +153,6 @@ $(document).ready(function() {
         console.log(impressionScore);
 
     });
-
-    // Smooth scrolling
-    //========================================================================
-
-    // if ($(window).width() < 768) {
-    //     };
-
-    //     $(document).on('click', 'a[href^="#"]', function(event) {
-    //     event.preventDefault();
-
-    //     $('html, body').animate({
-    //         scrollTop: $($.attr(this, 'href')).offset().top
-    //     }, 500);
-    // });
-
 
     // Process of uploading the image
     //========================================================================
@@ -299,40 +288,8 @@ $(document).ready(function() {
                                     console.log('Headers:', this.getAllResponseHeaders());
                                     var response = JSON.parse(this.responseText);
 
-                                    //face logic==========================================================
-                                    pitch = response.images[0].faces[0].pitch;
-                                    roll = response.images[0].faces[0].roll;
-                                    if (pitch < 0) {
-                                        faceScore = faceScore + 6;
-                                        console.log(faceScore);
-                                    }
-                                    if (roll < -10 || roll > 10) {
-                                        faceScore = faceScore + 6;
-                                    }
-
-                                    pitch = response.images[0].faces[0].pitch;
-                                    roll = response.images[0].faces[0].roll;
-                                    age = response.images[0].faces[0].attributes.age;
-                                    gender = response.images[0].faces[0].attributes.gender.type;
-                                    glasses = response.images[0].faces[0].attributes.glasses;
-
-                                    if (glasses === 'Eye') {
-                                        $('#glasses').text('Yes');
-                                    }
-                                    else {
-                                        $('#glasses').text('No');
-                                    }
-
-                                    if (pitch < 0) {
-                                        faceScore = faceScore + 6;
-                                        console.log(faceScore);
-                                    }
-                                    if (roll < -10 || roll > 10) {
-                                        faceScore = faceScore + 6;
-                                    }
-                                    $('#ageNumber').text(age);
-                                    $('#gender').text(gender);
-
+                                    
+                                    faceLogic(response);
 
                                     //Analysis functions called============================================
                                     wordLength();
@@ -382,34 +339,7 @@ $(document).ready(function() {
                         var response = JSON.parse(this.responseText);
                         console.log(response);
 
-
-                        //face logic
-                        pitch = response.images[0].faces[0].pitch;
-                        roll = response.images[0].faces[0].roll;
-                        age = response.images[0].faces[0].attributes.age;
-                        gender = response.images[0].faces[0].attributes.gender.type;
-                        glasses = response.images[0].faces[0].attributes.glasses;
-                        console.log(age);
-
-                        if (glasses === 'Eye') {
-                            $('#glasses').text('Yes');
-                        }
-                        else {
-                            $('#glasses').text('No');
-                        }
-
-                        if (pitch < 0) {
-                            faceScore = faceScore + 6;
-                            console.log(faceScore);
-                        }
-                        if (roll < -10 || roll > 10) {
-                            faceScore = faceScore + 6;
-                        }
-                        $('#ageNumber').text(age);
-                        $('#gender').text(gender);
-                        //$('#glasses').text(glasses);
-
-                        console.log(faceScore);
+                        faceLogic(response);
 
                     }
                 };
@@ -430,28 +360,7 @@ $(document).ready(function() {
                 }).done(function(response) {
 
                     console.log(response);
-
-                    if (response.frames[0].people.length === 0) {
-                        console.log("error");
-                    }
-                    else {
-                    
-
-                    //face logic
-                    fear = response.frames[0].people[0].emotions.fear;
-                    disgust = response.frames[0].people[0].emotions.disgust;
-                    anger = response.frames[0].people[0].emotions.anger;
-                    if (disgust > 0) {
-                    faceScore = faceScore + 7;
-                    }
-                    if (anger > 0) {
-                        faceScore = faceScore + 7;
-                    }
-                    if (fear > 0) {
-                        faceScore = faceScore + 7;
-                        console.log(faceScore);
-                    }
-                }
+                    emotionLogic(response);
                     
 
                     //call functions
@@ -475,26 +384,85 @@ $(document).ready(function() {
             $("#face4").removeClass('face4-active');
             $("#face5").removeClass('face5-active');
 
+            $("#faceStats").fadeIn();
+
     }); //end of modal submit
+
+
+    function emotionLogic(response) {
+        if ((response.code === 5000) || (response.code === 5001) || (response.code === 5002) || (response.code === 5003)) {
+            console.log('wrong file type');
+        }
+        else if (response.frames[0].people.length === 0) {
+            console.log("error");
+        }
+        else {
+        console.log("this works fine!!!!!!!!!!!!!!!!!!!");
+        fear = response.frames[0].people[0].emotions.fear;
+        disgust = response.frames[0].people[0].emotions.disgust;
+        anger = response.frames[0].people[0].emotions.anger;
+        if (disgust > 0) {
+        faceScore = faceScore + 6;
+        }
+        if (anger > 0) {
+            faceScore = faceScore + 6;
+        }
+        if (fear > 0) {
+            faceScore = faceScore + 6;
+            console.log(faceScore);
+        }
+        }
+    }
+
+    function faceLogic(response) {
+            console.log(response);
+            pitch = response.images[0].faces[0].pitch;
+            roll = response.images[0].faces[0].roll;
+            age = response.images[0].faces[0].attributes.age;
+            gender = response.images[0].faces[0].attributes.gender.type;
+            glasses = response.images[0].faces[0].attributes.glasses;
+            together = response.images[0].faces[0].attributes.lips;
+            console.log(age);
+
+            if (glasses === 'Eye') {
+                $('#glasses').text('Yes');
+            }
+            else {
+                $('#glasses').text('No');
+            }
+
+            if (together === "Together") {
+                faceScore = faceScore + 3;
+            }
+
+            if (pitch < 0) {
+                faceScore = faceScore + 6;
+                console.log(faceScore);
+            }
+            if (roll < -10 || roll > 10) {
+                faceScore = faceScore + 6;
+            }
+            $('#ageNumber').text(age);
+            $('#gender').text(gender);
+            //$('#glasses').text(glasses);
+
+            console.log(faceScore);
+        
+    }
 
     function createTableRow(url) {
 
         // Build the table row and add info into into the different <td>'s
         var creepInfoRow = $("<tr>");
-        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + url + "'>" + "<td>" + faceScore + "</td>");
+        var now = moment().format("HH:mm:ss");
 
-        //console.log("ROW MADE");
 
+        creepInfoRow.html("<td>" + "<img class='history-profile' src='" + url + "'>" +  "<td>" + targetName + "</td>" + "<td>" + '<img class=history-profile src=' + impressionSummaryImage + ">" + "<td>" + creepIndex + "</td>" + "<td>" + now + "</td>");
         $("tbody").prepend(creepInfoRow);
-
         var historyTable = $(".table-content").html();
-
-        console.log(historyTable);
-
         localStorage.setItem("History Table", historyTable);
     }
-
-      
+ 
 
     function creepAnalysis() {
         if (creepIndex<=25){
@@ -543,7 +511,7 @@ $(document).ready(function() {
 
         console.log("textScore:" + textScore);
 
-        var targetName = $("#input-name").val().trim();
+        targetName = $("#input-name").val().trim();
 
         creepIndex = textScore + impressionScore + faceScore;
         creepIndex = creepIndex.toFixed(1);
