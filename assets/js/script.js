@@ -288,14 +288,25 @@ $(document).ready(function() {
                                     console.log('Headers:', this.getAllResponseHeaders());
                                     var response = JSON.parse(this.responseText);
 
-                                    
-                                    faceLogic(response);
+                                    if ((response.Errors[0].ErrCode == 5002) || (response.Errors[0].ErrCode === 5000) || (response.Errors[0].ErrCode === 5001) || (response.Error[0].ErrCode === 5003) || (response.ErrCode === 3001)) {
+                                        console.log('error');
+                                        $('#glasses').text('Cannot Determine');
+                                        $('#ageNumber').text('Unkown');
+                                        $('#gender').text('N/A');
+                                        wordLength();
+                                        createTableRow(source);
+                                        indexChart();
+                                        creepAnalysis();
 
-                                    //Analysis functions called============================================
-                                    wordLength();
-                                    createTableRow(source);
-                                    indexChart();
-                                    creepAnalysis();
+                                    }
+                                    else {
+                                    
+                                        faceLogic(response);
+                                        wordLength();
+                                        createTableRow(source);
+                                        indexChart();
+                                        creepAnalysis();
+                                    }
                                 }
                             };
 
@@ -338,9 +349,19 @@ $(document).ready(function() {
                         console.log('Headers:', this.getAllResponseHeaders());
                         var response = JSON.parse(this.responseText);
                         console.log(response);
+                        //console.log(response.Errors[0].ErrCode);
+
+                        if ((response.Errors[0].ErrCode == 5002) || (response.Errors[0].ErrCode === 5000) || (response.Errors[0].ErrCode === 5001) || (response.Error[0].ErrCode === 5003) || (response.ErrCode === 3001)) {
+                            console.log('error');
+                            $('#glasses').text('Cannot Determine');
+                            $('#ageNumber').text('Unkown');
+                            $('#gender').text('N/A');
+
+                        }
+                        else {
 
                         faceLogic(response);
-
+                        }
                     }
                 };
 
@@ -397,7 +418,7 @@ $(document).ready(function() {
             console.log("error");
         }
         else {
-        console.log("this works fine!!!!!!!!!!!!!!!!!!!");
+        console.log("this works fine!");
         fear = response.frames[0].people[0].emotions.fear;
         disgust = response.frames[0].people[0].emotions.disgust;
         anger = response.frames[0].people[0].emotions.anger;
@@ -415,6 +436,8 @@ $(document).ready(function() {
     }
 
     function faceLogic(response) {
+        
+        
             console.log(response);
             pitch = response.images[0].faces[0].pitch;
             roll = response.images[0].faces[0].roll;
