@@ -276,7 +276,7 @@ $(document).ready(function() {
                             //face recognition api call======================================
                             var request = new XMLHttpRequest();
 
-                            request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
+                            request.open('POST', 'https://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
 
                             request.setRequestHeader('app_id', '59fe3f8b');
                             request.setRequestHeader('app_key', '472b1119c610482500bfb00b6e897a1c');
@@ -326,7 +326,7 @@ $(document).ready(function() {
                 //face recognition api call==================================================
                 var request = new XMLHttpRequest();
 
-                request.open('POST', 'http://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
+                request.open('POST', 'https://cors-anywhere.herokuapp.com/https://api.kairos.com/detect');
 
                 request.setRequestHeader('app_id', '59fe3f8b');
                 request.setRequestHeader('app_key', '472b1119c610482500bfb00b6e897a1c');
@@ -352,7 +352,7 @@ $(document).ready(function() {
 
 
                 //emotion api call==============================================================================
-                var url = "http://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
+                var url = "https://" + cors_api_host + '/https://api.kairos.com/v2/media?source=' + source;
                 $.ajax(url, {
                     headers: headers,
                     type: "POST",
