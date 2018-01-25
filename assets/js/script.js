@@ -286,15 +286,27 @@ $(document).ready(function() {
                                 if (this.readyState === 4) {
                                     console.log('Status:', this.status);
                                     console.log('Headers:', this.getAllResponseHeaders());
+                                    var stringResponse = this.responseText;
                                     var response = JSON.parse(this.responseText);
-
+                                    
+                                    if (stringResponse[2] === 'E') {
+                                        console.log('error');
+                                        $('#glasses').text('Cannot Determine');
+                                        $('#ageNumber').text('Unkown');
+                                        $('#gender').text('N/A');
+                                        wordLength();
+                                        createTableRow(source);
+                                        indexChart();
+                                        creepAnalysis();
+                                    }
+                                    else {
                                     
                                         faceLogic(response);
                                         wordLength();
                                         createTableRow(source);
                                         indexChart();
                                         creepAnalysis();
-                   
+                                    }
                                 }
                             };
 
