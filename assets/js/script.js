@@ -156,25 +156,42 @@ $(document).ready(function() {
     // if ($(window).width() < 768) {
     //     };
 
-        $(document).on('click', 'a[href^="#"]', function(event) {
-        event.preventDefault();
+    //     $(document).on('click', 'a[href^="#"]', function(event) {
+    //     event.preventDefault();
 
-        $('html, body').animate({
-            scrollTop: $($.attr(this, 'href')).offset().top
-        }, 500);
-    });
+    //     $('html, body').animate({
+    //         scrollTop: $($.attr(this, 'href')).offset().top
+    //     }, 500);
+    // });
 
 
     // Process of uploading the image
     //========================================================================
-    $("#form-submit").on("click", function(){
+    $("#form-submit").on("click", function(e){
+
+        e.preventDefault();
 
         //Validate Form
-        if ($("#input-name").val().length === 0 || $("#input-text").val().length === 0 ||impressionScore === false || ($("#input-url").val().length === 0 ) || $("#input-url").val() === "" ) {
+        if ($("#input-name").val().length === 0 || $("#input-text").val().length === 0 ||impressionScore === false && $("#input-image").val().length === 0 && $("#input-url").val().length === 0) {
 
-            alert("FILL OUT THE FORM");
+            $(".error").html("<p><i class='fa fa-exclamation-circle' aria-hidden='true'></i> Please fill out the required fields.</p>");
+            $(".error").addClass("lightRed");
+
+
+        } else if ($("#input-name").val().length === 0 || $("#input-text").val().length === 0 ||impressionScore === false && $("#input-url").val().length === 0) {
+
+            $(".error").html("<p><i class='fa fa-exclamation-circle' aria-hidden='true'></i> Please fill out the required fields.</p>");
+            $(".error").addClass("lightRed");
+
+        } else if ($("#input-url").val().length === 0 && $("#input-image").val().length === 0) {
+
+            $(".error").html("<p><i class='fa fa-exclamation-circle' aria-hidden='true'></i> Please fill out the required fields.</p>");
+            $(".error").addClass("lightRed");
 
         } else {
+
+            $(".error").html("");
+            $(".error").removeClass("lightRed");
 
             $("#modalContent").fadeToggle();
 
@@ -196,7 +213,7 @@ $(document).ready(function() {
 
         //Play loading gif
         // $("#modalContent").html("<img class='loading-logo' src='assets/img/svg/logo-v1.svg'>")
-        $(".loading-logo").css("display", "block");
+        $(".loading-logo").fadeIn();
         $("#modal-initial").css("display", "none");
             // Get file
             var file = imageInput.files[0];
@@ -519,7 +536,7 @@ $(document).ready(function() {
         
         var textScore = 33 - ((2 * wordLengthAverage) + longestWord.length);
         $('.impression').empty();
-        $('.impression').append('<img src=' + impressionSummaryImage + ">");
+        $('.impression').append("Impression: "+'<img src=' + impressionSummaryImage + ">");
         if (textScore < 0) {
             textScore = 0;
         };
@@ -546,7 +563,7 @@ $(document).ready(function() {
           $("#modalContent").fadeToggle(function(){
 
             $(".loading-logo").css("display", "none");
-            $("#modal-initial").css("display", "block");
+            $("#modal-initial").fadeToggle();
 
           });
     }
