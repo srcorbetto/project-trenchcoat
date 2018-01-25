@@ -68,7 +68,7 @@ $(document).ready(function() {
         impressionScore = 33;
         console.log(impressionScore);
 
-        impressionSummaryImage = "assets/img/svg/1-active.svg";
+        impressionSummaryImage = "assets/img/SVG/1-active.svg";
 
         impressionScore = 33;
         console.log(impressionScore);
@@ -87,7 +87,7 @@ $(document).ready(function() {
         impressionScore = 24.75;
         console.log(impressionScore);
 
-        impressionSummaryImage = "assets/img/svg/2-active.svg";
+        impressionSummaryImage = "assets/img/SVG/2-active.svg";
 
         impresssionScore = 24.75;
         console.log(impressionScore);
@@ -107,7 +107,7 @@ $(document).ready(function() {
         impressionScore = 16.5;
         console.log(impressionScore);
 
-        impressionSummaryImage = "assets/img/svg/3-active.svg";
+        impressionSummaryImage = "assets/img/SVG/3-active.svg";
 
         impressionScore = 16.5;
         console.log(impressionScore);
@@ -127,7 +127,7 @@ $(document).ready(function() {
         impressionScore = 8.25;
         console.log(impressionScore);
 
-        impressionSummaryImage = "assets/img/svg/4-active.svg";
+        impressionSummaryImage = "assets/img/SVG/4-active.svg";
 
         impressionScore = 8.25;
         console.log(impressionScore);
@@ -147,7 +147,7 @@ $(document).ready(function() {
         impressionScore = 0;
         console.log(impressionScore);
 
-        impressionSummaryImage = "assets/img/svg/5-active.svg";
+        impressionSummaryImage = "assets/img/SVG/5-active.svg";
 
         impressionScore = 0;
         console.log(impressionScore);
@@ -201,7 +201,7 @@ $(document).ready(function() {
         faceScore = 0;
 
         //Play loading gif
-        // $("#modalContent").html("<img class='loading-logo' src='assets/img/svg/logo-v1.svg'>")
+        // $("#modalContent").html("<img class='loading-logo' src='assets/img/SVG/logo-v1.svg'>")
         $(".loading-logo").fadeIn();
         $("#modal-initial").css("display", "none");
             // Get file
